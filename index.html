@@ -1,837 +1,623 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-  <title>Arqdyne Companion</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --bg:#080a0f;--border:rgba(255,255,255,0.06);
-      --accent:#00e5ff;--accent2:#7c3aed;--red:#ff4757;
-      --text:#e8eaf0;--muted:#5a6070;--glow:rgba(0,229,255,0.15);
-      --hh:60px;--fh:64px;
-    }
-    html,body{width:100%;height:100%;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow:hidden;}
-    header{position:fixed;top:0;left:0;right:0;height:var(--hh);display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid var(--border);background:rgba(8,10,15,0.92);backdrop-filter:blur(12px);z-index:50;}
-    footer{position:fixed;bottom:0;left:0;right:0;height:var(--fh);display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-top:1px solid var(--border);background:rgba(8,10,15,0.85);backdrop-filter:blur(12px);z-index:50;gap:16px;}
-    #canvas-wrap{position:fixed;top:var(--hh);left:0;right:0;bottom:var(--fh);display:flex;align-items:center;justify-content:center;z-index:1;}
-    #three-canvas{display:block;width:100%!important;height:100%!important;}
-    .logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:0.12em;text-transform:uppercase;}
-    .logo span{color:var(--accent);}
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gokulnath Chandrasekharan — Mechanical Design Engineer</title>
+<meta name="description" content="Portfolio of Gokulnath Chandrasekharan, Mechanical Design Engineer specialising in industrial automation, mechatronics, and high-speed sorting and handling systems."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#0B0D10;
+  --surface:#14171B;
+  --surface2:#1B1F24;
+  --border:#2A2F35;
+  --orange:#FF6B1A;
+  --blue:#4FA8D8;
+  --text:#F2F1EC;
+  --muted:#9AA1A9;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:0.03em;font-weight:600;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+a{color:inherit}
+img{max-width:100%;display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+section{padding:96px 0;border-bottom:1px solid var(--border);}
 
-    /* Status pill */
-    .status-pill{display:flex;align-items:center;gap:8px;font-size:0.7rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:100px;padding:5px 14px;}
-    .status-dot{width:6px;height:6px;border-radius:50%;background:var(--muted);flex-shrink:0;transition:background 0.4s,box-shadow 0.4s;}
-    .status-dot.active   {background:var(--accent); box-shadow:0 0 8px var(--accent); animation:pdot 2s ease-in-out infinite;}
-    .status-dot.listening{background:#ff9f43;       box-shadow:0 0 8px #ff9f43;       animation:pdot 0.5s ease-in-out infinite;}
-    .status-dot.thinking {background:#f9ca24;       box-shadow:0 0 8px #f9ca24;       animation:pdot 0.8s ease-in-out infinite;}
-    .status-dot.speaking {background:var(--accent2);box-shadow:0 0 8px var(--accent2);animation:pdot 0.7s ease-in-out infinite;}
-    @keyframes pdot{0%,100%{opacity:1}50%{opacity:0.25}}
+/* ---------- NAV ---------- */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(11,13,16,0.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{
+  max-width:1180px;margin:0 auto;padding:16px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+}
+.brand{font-family:'Oswald',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;}
+.brand span{color:var(--orange);}
+nav ul{list-style:none;display:flex;gap:clamp(10px,2.5vw,28px);flex-wrap:wrap;}
+nav a{
+  font-family:'IBM Plex Mono',monospace;
+  font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;padding:4px 2px;
+  border-bottom:2px solid transparent;transition:color .2s,border-color .2s;
+  white-space:nowrap;
+}
+nav a:hover{color:var(--orange);border-color:var(--orange);}
 
-    /* Glow ring */
-    #glow-ring{position:absolute;width:min(45vw,380px);height:min(45vw,380px);border-radius:50%;pointer-events:none;background:radial-gradient(circle,var(--glow) 0%,transparent 70%);animation:breathe 4s ease-in-out infinite;transition:background 0.5s;}
-    #glow-ring.listening{background:radial-gradient(circle,rgba(255,159,67,0.18) 0%,transparent 70%);}
-    #glow-ring.speaking {background:radial-gradient(circle,rgba(124,58,237,0.2)  0%,transparent 70%);}
-    @keyframes breathe{0%,100%{transform:scale(1);opacity:0.7}50%{transform:scale(1.08);opacity:1}}
+/* ---------- HERO / DATA PLATE ---------- */
+#hero{padding:72px 0 96px;border-bottom:1px solid var(--border);}
+.plate{
+  position:relative;
+  background:linear-gradient(180deg,var(--surface2),var(--surface));
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:48px clamp(24px,5vw,64px);
+  display:grid;
+  grid-template-columns:1.3fr 1fr;
+  gap:40px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03);
+}
+.rivet{
+  position:absolute;width:12px;height:12px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #6b7078, #23262b 70%);
+  box-shadow:0 1px 2px rgba(0,0,0,0.6), inset 0 0 2px rgba(0,0,0,0.8);
+}
+.rivet.tl{top:14px;left:14px}.rivet.tr{top:14px;right:14px}
+.rivet.bl{bottom:14px;left:14px}.rivet.br{bottom:14px;right:14px}
+.plate-eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.16em;
+  color:var(--orange);text-transform:uppercase;margin-bottom:14px;
+}
+.plate h1{font-size:clamp(1.7rem,6.5vw,3.2rem);line-height:1.12;margin-bottom:18px;overflow-wrap:break-word;word-break:break-word;}
+.plate h1 .accent{color:var(--orange)}
+.plate-role{font-size:1.05rem;color:var(--muted);margin-bottom:24px;max-width:46ch;}
+.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
+.tag{
+  font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.04em;
+  border:1px solid var(--border);color:var(--muted);padding:5px 10px;border-radius:3px;
+  background:rgba(255,255,255,0.02);
+}
+.hero-links{display:flex;gap:14px;flex-wrap:wrap;}
+.btn{
+  font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;
+  padding:12px 22px;border-radius:3px;text-decoration:none;font-weight:600;
+  border:1px solid var(--orange);color:var(--orange);transition:background .2s,color .2s;
+}
+.btn:hover{background:var(--orange);color:#0B0D10;}
+.btn.ghost{border-color:var(--border);color:var(--muted);}
+.btn.ghost:hover{border-color:var(--blue);color:var(--blue);background:transparent;}
 
-    /* Unlock screen */
-    #unlock-screen{position:fixed;inset:0;z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;background:rgba(8,10,15,0.97);backdrop-filter:blur(20px);cursor:pointer;}
-    #unlock-screen.hidden{display:none;}
-    .unlock-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:2rem;letter-spacing:0.14em;text-transform:uppercase;}
-    .unlock-logo span{color:var(--accent);}
-    .unlock-sub{font-size:0.82rem;color:var(--muted);letter-spacing:0.06em;}
-    .unlock-btn{margin-top:8px;padding:14px 40px;border:1.5px solid var(--accent);border-radius:100px;background:rgba(0,229,255,0.06);color:var(--accent);font-family:'Syne',sans-serif;font-size:0.85rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;animation:glow-pulse 2s ease-in-out infinite;}
-    @keyframes glow-pulse{0%,100%{box-shadow:0 0 12px rgba(0,229,255,0.2)}50%{box-shadow:0 0 32px rgba(0,229,255,0.5)}}
+.plate-data{
+  border-left:1px solid var(--border);
+  padding-left:clamp(20px,3vw,40px);
+  display:flex;flex-direction:column;justify-content:center;gap:16px;
+}
+.data-row{display:flex;justify-content:space-between;gap:12px;font-family:'IBM Plex Mono',monospace;font-size:0.78rem;border-bottom:1px dashed var(--border);padding-bottom:10px;}
+.data-row .k{color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;}
+.data-row .v{color:var(--text);text-align:right;}
 
-    /* Loading */
-    #loading{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:var(--bg);transition:opacity 0.6s;z-index:10;}
-    #loading.hidden{opacity:0;pointer-events:none;}
-    .spinner{width:40px;height:40px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.9s linear infinite;}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .loading-label{font-family:'Syne',sans-serif;font-size:0.72rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);}
+@media (max-width:820px){
+  .plate{grid-template-columns:1fr;}
+  .plate-data{border-left:none;border-top:1px solid var(--border);padding-left:0;padding-top:24px;}
+}
 
-    /* Error */
-    #error-msg{display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:40px;text-align:center;z-index:10;}
-    #error-msg.visible{display:flex;}
-    #error-msg .err-title{font-family:'Syne',sans-serif;font-size:1rem;color:#ff5370;}
-    #error-msg .err-body{font-size:0.8rem;color:var(--muted);line-height:1.6;max-width:360px;}
-    #error-msg code{background:rgba(255,255,255,0.05);padding:2px 6px;border-radius:4px;color:var(--accent);}
+/* ---------- SECTION HEADS ---------- */
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.18em;
+  color:var(--blue);text-transform:uppercase;margin-bottom:10px;
+}
+.sec-head{margin-bottom:44px;max-width:70ch;}
+.sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);margin-bottom:12px;}
+.sec-head p{color:var(--muted);}
 
-    /* Transcript */
-    #transcript{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);max-width:min(540px,88vw);background:rgba(14,17,24,0.94);border:1px solid var(--border);border-radius:14px;padding:14px 20px;font-size:0.88rem;line-height:1.55;color:var(--text);backdrop-filter:blur(16px);opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:20;text-align:center;}
-    #transcript.visible{opacity:1;}
-    #transcript .spk{font-family:'Syne',sans-serif;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
-    #transcript.aria .spk{color:var(--accent);}
+/* ---------- ABOUT ---------- */
+#about p.lead{font-size:1.05rem;color:var(--text);max-width:74ch;margin-bottom:28px;}
+.about-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 32px;max-width:900px;}
+.about-grid li{list-style:none;position:relative;padding-left:22px;color:var(--muted);font-size:0.95rem;}
+.about-grid li::before{content:"▸";position:absolute;left:0;color:var(--orange);}
+@media (max-width:640px){.about-grid{grid-template-columns:1fr;}}
 
-    /* Mood badge */
-    #mood-badge{position:absolute;top:12px;right:16px;font-family:'Syne',sans-serif;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:100px;padding:4px 10px;opacity:0;transition:opacity 0.4s;z-index:20;}
-    #mood-badge.visible{opacity:1;}
+/* ---------- SPEC SHEET (skills table) ---------- */
+.spec-table{width:100%;border-collapse:collapse;overflow-x:auto;display:block;}
+.spec-table tbody{display:table;width:100%;}
+.spec-table tr{border-bottom:1px solid var(--border);}
+.spec-table tr:first-child{border-top:1px solid var(--border);}
+.spec-table td{padding:16px 18px;vertical-align:top;font-size:0.9rem;}
+.spec-table td.label{
+  width:220px;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.06em;
+  color:var(--orange);text-transform:uppercase;white-space:nowrap;
+}
+.spec-table td.val{color:var(--muted);}
+.table-scroll{overflow-x:auto;border:1px solid var(--border);border-radius:4px;background:var(--surface);}
 
-    /* VAD waveform — in footer, shows mic energy */
-    #vad-wrap{display:flex;align-items:center;gap:3px;height:28px;flex:1;justify-content:center;}
-    .vbar{width:3px;border-radius:2px;background:var(--accent);min-height:3px;transition:height 0.07s ease;}
+/* ---------- WORK / CASE STUDIES ---------- */
+.case{
+  display:grid;grid-template-columns:340px 1fr;gap:40px;
+  padding:40px 0;border-bottom:1px solid var(--border);
+}
+.case:last-child{border-bottom:none;padding-bottom:0;}
+.case:first-child{padding-top:0;}
+@media (max-width:760px){
+  .case{grid-template-columns:1fr;gap:20px;}
+}
+.asbuilt{
+  border:1px solid var(--border);background:var(--surface);border-radius:6px;
+  overflow:hidden;position:relative;align-self:start;
+}
+.asbuilt .frame{
+  aspect-ratio:4/3;width:100%;background:var(--surface2);
+  display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
+}
+.asbuilt img{width:100%;height:100%;object-fit:cover;display:block;}
+.asbuilt .frame .placeholder{
+  display:none;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.04em;
+  text-align:center;padding:16px;text-transform:uppercase;
+}
+.asbuilt img.broken{display:none;}
+.asbuilt img.broken + .placeholder{display:flex;}
+.asbuilt .cap{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 14px;border-top:1px solid var(--border);
+  font-family:'IBM Plex Mono',monospace;font-size:0.66rem;letter-spacing:0.06em;
+  color:var(--muted);text-transform:uppercase;
+}
+.asbuilt .cap .rev{color:var(--orange);}
 
-    /* Interrupt button */
-    #btn-interrupt{display:flex;align-items:center;gap:6px;padding:7px 16px;border:1px solid var(--red);border-radius:100px;background:transparent;color:var(--red);font-family:'DM Sans',sans-serif;font-size:0.74rem;cursor:pointer;outline:none;opacity:0;pointer-events:none;transition:opacity 0.2s;-webkit-tap-highlight-color:transparent;flex-shrink:0;}
-    #btn-interrupt.visible{opacity:1;pointer-events:auto;}
-    #btn-interrupt:hover{background:rgba(255,71,87,0.08);}
-    #btn-interrupt svg{width:13px;height:13px;fill:currentColor;}
+.case-body h3{font-size:1.35rem;margin-bottom:4px;}
+.case-role{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;color:var(--blue);text-transform:uppercase;margin-bottom:16px;}
+.case-block{margin-bottom:14px;}
+.case-block .k{
+  font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;color:var(--orange);
+  text-transform:uppercase;margin-bottom:6px;display:block;
+}
+.case-block p, .case-block ul{color:var(--muted);font-size:0.92rem;}
+.case-block ul{padding-left:18px;}
+.case-block li{margin-bottom:4px;}
 
-    /* Clear button */
-    #btn-clear{display:flex;align-items:center;gap:6px;padding:7px 16px;border:1px solid var(--border);border-radius:100px;background:transparent;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:0.74rem;cursor:pointer;outline:none;transition:color 0.2s;-webkit-tap-highlight-color:transparent;flex-shrink:0;}
-    #btn-clear:hover{color:var(--text);}
-    #btn-clear svg{width:13px;height:13px;fill:currentColor;}
+/* ---------- REVISION LOG ---------- */
+.revlog{width:100%;border-collapse:collapse;}
+.revlog thead th{
+  font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--orange);text-align:left;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface2);
+}
+.revlog td{padding:16px;border-bottom:1px solid var(--border);vertical-align:top;font-size:0.88rem;}
+.revlog td.rev{
+  font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--orange);width:56px;text-align:center;
+}
+.revlog td.period{font-family:'IBM Plex Mono',monospace;color:var(--muted);white-space:nowrap;width:150px;}
+.revlog td.role{color:var(--text);font-weight:500;}
+.revlog td.org{color:var(--muted);font-size:0.82rem;display:block;margin-top:2px;}
+.revlog td.desc{color:var(--muted);}
+.revlog tr:last-child td{border-bottom:none;}
 
-    /* Debug */
-    #debug-panel{display:none;position:fixed;top:70px;right:16px;width:220px;background:rgba(14,17,24,0.96);border:1px solid var(--border);border-radius:10px;padding:14px;z-index:200;font-size:0.7rem;max-height:calc(100vh - 160px);overflow-y:auto;}
-    #debug-panel.visible{display:block;}
-    #debug-panel h3{font-family:'Syne',sans-serif;font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;}
-    .morph-row{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:5px;}
-    .morph-row label{color:var(--muted);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .morph-row input[type=range]{width:76px;accent-color:var(--accent);}
-    .mood-btn-row{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px;}
-    .mood-btn{padding:3px 8px;border:1px solid var(--border);border-radius:4px;background:transparent;color:var(--muted);font-size:0.65rem;cursor:pointer;font-family:'DM Sans',sans-serif;}
-    .mood-btn:hover,.mood-btn.active{color:var(--accent);border-color:var(--accent);}
-  </style>
+/* ---------- EDUCATION ---------- */
+.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
+.edu-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:24px;}
+.edu-card h4{font-size:1rem;margin-bottom:6px;}
+.edu-card .org{color:var(--blue);font-family:'IBM Plex Mono',monospace;font-size:0.78rem;margin-bottom:4px;}
+.edu-card .meta{color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:0.72rem;}
+
+/* ---------- CONTACT ---------- */
+#contact{border-bottom:none;}
+.contact-plate{
+  background:var(--surface2);border:1px solid var(--border);border-radius:6px;
+  padding:48px clamp(24px,5vw,56px);display:flex;flex-wrap:wrap;gap:32px;justify-content:space-between;align-items:center;
+  position:relative;
+}
+.contact-plate h2{font-size:clamp(1.5rem,3vw,2rem);margin-bottom:10px;}
+.contact-plate p{color:var(--muted);max-width:44ch;}
+.contact-links{display:flex;flex-direction:column;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:0.85rem;}
+.contact-links a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:2px;transition:color .2s,border-color .2s;}
+.contact-links a:hover{color:var(--orange);border-color:var(--orange);}
+
+footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.04em;}
+</style>
 </head>
 <body>
 
-<!-- Tap to unlock AudioContext — browser requirement -->
-<div id="unlock-screen">
-  <div class="unlock-logo">Arq<span>dyne</span></div>
-  <div class="unlock-sub">AI Companion · ARIA</div>
-  <div class="unlock-btn">Tap to Begin</div>
-</div>
-
 <header>
-  <div class="logo">Arq<span>dyne</span></div>
-  <div class="status-pill">
-    <div class="status-dot" id="status-dot"></div>
-    <span id="status-text">Initialising</span>
+  <div class="nav-inner">
+    <div class="brand">Gokulnath<span>.</span></div>
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
   </div>
 </header>
 
-<div id="canvas-wrap">
-  <div id="glow-ring"></div>
-  <div id="loading"><div class="spinner"></div><div class="loading-label" id="load-label">Loading face model…</div></div>
-  <div id="error-msg">
-    <div class="err-title">Model not found</div>
-    <div class="err-body">Place <code>head.glb</code> inside <code>static/models/</code> and refresh.</div>
+<section id="hero">
+  <div class="wrap">
+    <div class="plate">
+      <div class="rivet tl"></div><div class="rivet tr"></div>
+      <div class="rivet bl"></div><div class="rivet br"></div>
+      <div class="plate-main">
+        <div class="plate-eyebrow">Data Plate · Rev D</div>
+        <h1>Gokulnath<br/>Chandra<span class="accent">sekharan</span></h1>
+        <p class="plate-role">Mechanical Design Engineer — Industrial Automation &amp; Process Systems. 5+ years engineering high-speed, bespoke automation from concept through production commissioning.</p>
+        <div class="tag-row">
+          <span class="tag">Automation</span>
+          <span class="tag">Mechatronics</span>
+          <span class="tag">Robotics</span>
+          <span class="tag">Product Development</span>
+        </div>
+        <div class="hero-links">
+          <a class="btn" href="#work">View Work</a>
+          <a class="btn ghost" href="#contact">Contact</a>
+        </div>
+      </div>
+      <div class="plate-data">
+        <div class="data-row"><span class="k">Location</span><span class="v">Kerala, India (open to relocate)</span></div>
+        <div class="data-row"><span class="k">Email</span><span class="v">gokulnathcs@gmail.com</span></div>
+        <div class="data-row"><span class="k">Phone</span><span class="v">+91 8547141400</span></div>
+        <div class="data-row"><span class="k">Experience</span><span class="v">5+ Years</span></div>
+        <div class="data-row"><span class="k">Discipline</span><span class="v">Mechanical / Mechatronics</span></div>
+      </div>
+    </div>
   </div>
-  <canvas id="three-canvas"></canvas>
-  <div id="transcript"><div class="spk" id="t-spk">You</div><div id="t-txt"></div></div>
-  <div id="mood-badge"></div>
-</div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">01 / About</div>
+      <h2>Engineering Profile</h2>
+    </div>
+    <p class="lead">Senior Mechanical &amp; Mechatronics Engineer with 5+ years of experience architecting and delivering production-scale automated systems within high-performance and regulated industrial environments. Specialised in designing robust mechanical architectures for automation, integrating electromechanical systems, and leading products from concept through manufacturing, commissioning, and optimisation.</p>
+    <ul class="about-grid">
+      <li>Full product lifecycle ownership, concept to production</li>
+      <li>Translating operational challenges into engineered solutions</li>
+      <li>Design for manufacturability (DFMA) &amp; production scalability</li>
+      <li>Optimising system reliability, throughput, and maintainability</li>
+      <li>Cross-functional leadership across engineering, ops, and leadership</li>
+      <li>BS 8888 compliant design, sheet metal fabrication, CNC manufacture</li>
+    </ul>
+  </div>
+</section>
+
+<section id="capabilities">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">02 / Spec Sheet</div>
+      <h2>Tools &amp; Capabilities</h2>
+      <p>Engineering leadership and technical stack, condensed as a spec sheet.</p>
+    </div>
+    <div class="table-scroll">
+      <table class="spec-table">
+        <tbody>
+          <tr><td class="label">System Architecture &amp; Design</td><td class="val">SolidWorks &middot; GD&amp;T &middot; Sheet Metal &middot; Fabrication &middot; Structural Design &middot; FEA (ANSYS) &middot; DFMA &middot; Production Design</td></tr>
+          <tr><td class="label">Automation &amp; Controls</td><td class="val">PLC (Siemens S7, TIA Portal, RSLogix500) &middot; SCADA (WinCC) &middot; HMI &middot; Sensors &middot; Actuators &middot; VFD &middot; Conveyor Systems &middot; Feed Screw Mechanisms</td></tr>
+          <tr><td class="label">Robotics &amp; IIOT</td><td class="val">UR5 Programming &middot; MATLAB &middot; Python &middot; CoppeliaSim &middot; Data Acquisition &middot; Remote Monitoring &middot; Web-based Control Systems</td></tr>
+          <tr><td class="label">Engineering Governance</td><td class="val">BS 8888 &middot; ISO 9001 &middot; ISO 13485 &middot; ISO 14971 &middot; QMS &middot; SOP Development &middot; BOM Control &middot; FMEA &middot; Root Cause Analysis</td></tr>
+          <tr><td class="label">CAD Software</td><td class="val">SolidWorks (Advanced) &middot; Fusion 360 &middot; Autodesk Inventor &middot; AutoCAD &middot; CATIA &middot; ANSYS</td></tr>
+          <tr><td class="label">Manufacturing Processes</td><td class="val">Additive Manufacture (FDM) &middot; CNC Machining &middot; Sheet Metal Fabrication &middot; Injection Moulding (Basic)</td></tr>
+          <tr><td class="label">Documentation</td><td class="val">BOMs &middot; SOPs &middot; O&amp;M Manuals &middot; Assembly Instructions &middot; Test &amp; Technical Reports &middot; Engineering Change Reports</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">03 / Revision Log</div>
+      <h2>Career History</h2>
+      <p>Career progression, styled as a CAD drawing revision block.</p>
+    </div>
+    <div class="table-scroll">
+      <table class="revlog">
+        <thead>
+          <tr><th>Rev</th><th>Period</th><th>Role / Org</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="rev">A</td>
+            <td class="period">Feb 2019 – Oct 2019</td>
+            <td class="role">Maintenance Engineer Apprentice<span class="org">Wockhardt Ltd, Daman, India</span></td>
+            <td class="desc">Preventive maintenance on PLC–SCADA water systems, HVAC, boilers, and air compressors; workforce policy, safety, and compliance documentation.</td>
+          </tr>
+          <tr>
+            <td class="rev">B</td>
+            <td class="period">Jan 2020 – Jan 2021</td>
+            <td class="role">Founder &amp; Head of Engineering<span class="org">Botlab Technologies, Malappuram, India</span></td>
+            <td class="desc">Led R&amp;D in robotics and rehabilitation technologies. Designed and prototyped a low-cost robotic arm rehabilitation device to ISO 13485 / QMS principles; researched a VR gait-rehabilitation exoskeleton with ANSYS FEA validation.</td>
+          </tr>
+          <tr>
+            <td class="rev">C</td>
+            <td class="period">Nov 2022 – Jan 2026</td>
+            <td class="role">Mechatronics Engineer<span class="org">BigSis t/a Zyzzle Ltd, Reading, UK</span></td>
+            <td class="desc">End-to-end mechanical design of high-speed automation systems for hygienic insect-rearing production, applying DFMA, GD&amp;T, and FMEA. Boosted sorting throughput 8×, cut assembly time 50% via modular design, and reduced project cost 40% through in-house manufacture.</td>
+          </tr>
+          <tr>
+            <td class="rev">D</td>
+            <td class="period">Jul 2026 – Present</td>
+            <td class="role">Senior R&amp;D Engineer<span class="org">Sickle Innovations Pvt Ltd, Telangana, India</span></td>
+            <td class="desc">Leading mechanical engineering across two R&amp;D programmes: a high-throughput potato sorting/grading machine and a solar-powered, AI-fed field aphid monitoring system.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">04 / Work</div>
+      <h2>Case Studies</h2>
+      <p>Nine mechanical subsystems engineered for production automation environments. Reference plates show the as-built system; write-ups below cover the engineering problem, approach, and result.</p>
+    </div>
+
+    <!-- 1 -->
+    <div class="case">
+      <div class="asbuilt">
+        <div class="frame">
+          <img src="images/sorting-system.png" alt="Automated Sorting & Handling Line — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
+          <div class="placeholder">As-built image pending<br/>images/sorting-system.png</div>
+        </div>
+        <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
+      </div>
+      <div class="case-body">
+        <h3>Automated Sorting &amp; Handling Line</h3>
+        <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+        <div class="case-block"><span class="k">Problem</span><p>A hygienic insect-rearing production line needed a fully automated sorting architecture capable of high throughput with minimal manual intervention.</p></div>
+        <div class="case-block"><span class="k">Approach</span><ul>
+          <li>Led concept development, feasibility evaluation, and mechanical architecture definition</li>
+          <li>Designed modular conveyor and channelising systems, integrating sensors, actuators, and decision-based separation</li>
+          <li>Validated iteratively via rapid prototyping (3D printing &amp; CNC), then oversaw fabrication, assembly, and commissioning</li>
+        </ul></div>
+        <div class="case-block"><span class="k">Result</span><p>Multi-channel flow architecture eliminated bottlenecks and a fail-safe distribution system maintained uptime, reducing manual handling while improving stability and throughput on the production floor.</p></div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="case">
+      <div class="asbuilt">
+        <div class="frame">
+          <img src="images/hibernation-tunnel.png" alt="Cold-Tunnel Hibernation Sorter — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
+          <div class="placeholder">As-built image pending<br/>images/hibernation-tunnel.png</div>
+        </div>
+        <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
+      </div>
+      <div class="case-body">
+        <h3>Cold-Tunnel Hibernation Sorter</h3>
+        <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+        <div class="case-block"><span class="k">Problem</span><p>Downstream handling and quality checks required product to be temporarily and safely hibernated via controlled cooling, without breaching biosecurity or uniformity requirements.</p></div>
+        <div class="case-block"><span class="k">Approach</span><ul>
+          <li>Engineered a multi-fan forced-convection cooling system for uniform airflow and thermal gradients across the tunnel</li>
+          <li>Integrated a precision wiper mechanism to distribute product evenly for consistent thermal exposure</li>
+          <li>Designed a converging guide to feed the cooling channel, and a feedscrew-driven transport to regulate residence time</li>
+        </ul></div>
+        <div class="case-block"><span class="k">Result</span><p>Consistent hibernation duration and thermal exposure across every unit, with mechanical sealing preventing humid-air ingress — scaled cleanly into full production.</p></div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="case">
+      <div class="asbuilt">
+        <div class="frame">
+          <img src="images/loader-system.png" alt="AI-Guided Trolley Loader — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
+          <div class="placeholder">As-built image pending<br/>images/loader-system.png</div>
+        </div>
+        <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
+      </div>
+      <div class="case-body">
+        <h3>AI-Guided Trolley Loader</h3>
+        <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+        <div class="case-block"><span class="k">Problem</span><p>Manual trolley loading across 63 trays was labour-intensive and inconsistent, limiting throughput and scalability.</p></div>
+        <div class="case-block"><span class="k">Approach</span><ul>
+          <li>Designed a multi-channel channeliser and belt-driven shuttle conveyor for precise tray positioning</li>
+          <li>Integrated an AI vision system to detect load size and dynamically regulate fill level per tray</li>
+          <li>Engineered secure locking to dock and stabilise the trolley, with multiple flow-control gates to balance distribution</li>
+        </ul></div>
+        <div class="case-block"><span class="k">Result</span><p>Full automation of multi-tray loading with AI-controlled fill accuracy, cutting manpower requirements while improving throughput and handling stability.</p></div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="case">
+      <div class="asbuilt">
+        <div class="frame">
+          <img src="images/inversion-separation.png" alt="Single-Actuator Inversion & Separation — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
+          <div class="placeholder">As-built image pending<br/>images/inversion-separation.png</div>
+        </div>
+        <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
+      </div>
+      <div class="case-body">
+        <h3>Single-Actuator Inversion &amp; Separation</h3>
+        <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+        <div class="case-block"><span class="k">Problem</span><p>Downstream processing needed capsule inversion and product separation, but separate actuation stages added cost and mechanical complexity.</p></div>
+        <div class="case-block"><span class="k">Approach</span><ul>
+          <li>Defined a precision tolerancing strategy for synchronised inversion and separation</li>
+          <li>Developed a feedscrew system that performs both inversion and separation from a single actuator</li>
+          <li>Engineered a tight-tolerance separator for reliable product extraction, with feedscrew-driven transport for uniform feeding</li>
+        </ul></div>
+        <div class="case-block"><span class="k">Result</span><p>Actuator consolidation reduced mechanical complexity while improving extraction consistency and overall line stability.</p></div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="case">
+      <div class="asbuilt">
+        <div class="frame">
+          <img src="images/channelising-system.png" alt="Non-Contact Channeliser — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
+          <div class="placeholder">As-built image pending<br/>images/channelising-system.png</div>
+        </div>
+        <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
+      </div>
+      <div class="case-body">
+        <h3>Non-Contact Channeliser</h3>
+        <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+        <div class="case-block"><span class="k">Problem</span><p>Bulk product formed crystal-like structuring that prevented reliable entry into individual flow channels, causing repeated entry failures.</p></div>
+        <div class="case-block"><span class="k">Approach</span><ul>
+          <li>Iterated multiple prototypes to identify and address the bulk-instability failure mode</li>
+          <li>Engineered a non-contact mechanism that disrupts internal bulk bonding without mechanically disturbing individual products</li>
+          <li>Divided bulk flow into controlled individual lines feeding downstream channels</li>
+        </ul></div>
+        <div class="case-block"><span class="k">Result</span><p>Eliminated entry failures from bulk crystal formation and stabilised flow consistency without compromising product integrity.</p></div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="case">
+      <div class="asbuilt">
+        <div class="frame">
+          <img src="images/decision-gate.png" alt="Intelligent Decision-Gate Routing — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
+          <div class="placeholder">As-built image pending<br/>images/decision-gate.png</div>
+        </div>
+        <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
+      </div>
+      <div class="case-body">
+        <h3>Intelligent Decision-Gate Routing</h3>
+        <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+        <div class="case-block"><span class="k">Problem</span><p>Product routing logic relied on an over-complex separation mechanism, hurting maintainability and uptime.</p></div>
+        <div class="case-block"><span class="k">Approach</span><ul>
+          <li>Engineered a simplified separation mechanism with integrated mechanical gating logic for intelligent routing</li>
+          <li>Prototyped a further 3-way decision-gate mechanism to extend routing capability</li>
+        </ul></div>
+        <div class="case-block"><span class="k">Result</span><p>Reduced part count and system complexity while improving maintainability, separation accuracy, and operational uptime.</p></div>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="case">
+      <div class="asbuilt">
+        <div class="frame">
+          <img src="images/distribution-system.png" alt="Fail-Safe Distribution — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
+          <div class="placeholder">As-built image pending<br/>images/distribution-system.png</div>
+        </div>
+        <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
+      </div>
+      <div class="case-body">
+        <h3>Fail-Safe Distribution</h3>
+        <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+        <div class="case-block"><span class="k">Problem</span><p>Single-channel product flow was vulnerable to full-line stoppage from a single blockage.</p></div>
+        <div class="case-block"><span class="k">Approach</span><ul>
+          <li>Redesigned flow by splitting single-channel systems into multiple parallel channels</li>
+          <li>Engineered a fail-safe distribution architecture that keeps product moving through partial blockages</li>
+        </ul></div>
+        <div class="case-block"><span class="k">Result</span><p>Adopted across several production systems, the design keeps product flowing uninterrupted despite partial blockages.</p></div>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="case">
+      <div class="asbuilt">
+        <div class="frame">
+          <img src="images/cage-system.png" alt="Non-Contact Cage & Pooter — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
+          <div class="placeholder">As-built image pending<br/>images/cage-system.png</div>
+        </div>
+        <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
+      </div>
+      <div class="case-body">
+        <h3>Non-Contact Cage &amp; Pooter</h3>
+        <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+        <div class="case-block"><span class="k">Problem</span><p>Exposed mechanical handling caused product damage and generated debris that blocked the downstream vision system.</p></div>
+        <div class="case-block"><span class="k">Approach</span><ul>
+          <li>Engineered an induced-air pooter for gentle, non-contact product handling</li>
+          <li>Designed a protective cage architecture to prevent product escape and exposure to moving parts</li>
+          <li>Optimised airflow parameters by calculation for controlled, safe, and efficient return transport</li>
+        </ul></div>
+        <div class="case-block"><span class="k">Result</span><p>Eliminated contact-related product damage and vision-system blockages while improving handling reliability and system cleanliness.</p></div>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="case">
+      <div class="asbuilt">
+        <div class="frame">
+          <img src="images/arm-rehab.png" alt="Low-Cost Arm Rehabilitation Device — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
+          <div class="placeholder">As-built image pending<br/>images/arm-rehab.png</div>
+        </div>
+        <div class="cap"><span>As-built</span><span class="rev">Rev B</span></div>
+      </div>
+      <div class="case-body">
+        <h3>Low-Cost Arm Rehabilitation Device</h3>
+        <div class="case-role">Founder — Botlab Technologies</div>
+        <div class="case-block"><span class="k">Problem</span><p>Assisted arm rehabilitation hardware on the market was cost-prohibitive for wider clinical and home use.</p></div>
+        <div class="case-block"><span class="k">Approach</span><ul>
+          <li>Conceptualised the mechanical assistive architecture and designed the structural frame and joint mechanisms</li>
+          <li>Fabricated a functional metal prototype, applying ISO 13485 QMS methodology and FEA (ANSYS) for structural validation</li>
+          <li>Ran physiotherapist-supervised trials, iterating the design against patient feedback</li>
+        </ul></div>
+        <div class="case-block"><span class="k">Result</span><p>Delivered a working rehabilitation device roughly 60% more affordable than comparable market solutions, validated through supervised patient trials.</p></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">05 / Education</div>
+      <h2>Education &amp; Certification</h2>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <h4>MSc Mechatronics</h4>
+        <div class="org">De Montfort University, Leicester, UK</div>
+        <div class="meta">2021 – 2022 · 7.4 GPA</div>
+      </div>
+      <div class="edu-card">
+        <h4>BEng (Hons) Mechanical Engineering</h4>
+        <div class="org">Calicut University, India</div>
+        <div class="meta">2014 – 2018 · 7.0 GPA</div>
+      </div>
+      <div class="edu-card">
+        <h4>Automation System Engineer</h4>
+        <div class="org">TÜV Rheinland Certified, India</div>
+        <div class="meta">2019</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-plate">
+      <div class="rivet tl"></div><div class="rivet tr"></div>
+      <div class="rivet bl"></div><div class="rivet br"></div>
+      <div>
+        <h2>Let's Build Something</h2>
+        <p>Open to relocation for the right engineering challenge. Reach out directly.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:gokulnathcs@gmail.com">gokulnathcs@gmail.com</a>
+        <a href="tel:+918547141400">+91 8547141400</a>
+        <span class="mono" style="color:var(--muted);font-size:0.85rem;">Kerala, India — open to relocate</span>
+      </div>
+    </div>
+  </div>
+</section>
 
 <footer>
-  <div id="btn-clear">
-    <svg viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
-    Clear
-  </div>
-
-  <!-- Live mic waveform — always visible while listening -->
-  <div id="vad-wrap">
-    <div class="vbar" style="height:3px"></div>
-    <div class="vbar" style="height:5px"></div>
-    <div class="vbar" style="height:9px"></div>
-    <div class="vbar" style="height:14px"></div>
-    <div class="vbar" style="height:20px"></div>
-    <div class="vbar" style="height:25px"></div>
-    <div class="vbar" style="height:20px"></div>
-    <div class="vbar" style="height:14px"></div>
-    <div class="vbar" style="height:9px"></div>
-    <div class="vbar" style="height:5px"></div>
-    <div class="vbar" style="height:3px"></div>
-  </div>
-
-  <div id="btn-interrupt">
-    <svg viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></svg>
-    Interrupt
-  </div>
+  &copy; <span id="year"></span> Gokulnath Chandrasekharan. Built with care, not Canva.
 </footer>
 
-<div id="debug-panel">
-  <h3>Mood Test</h3>
-  <div class="mood-btn-row" id="mood-btns"></div>
-  <h3 style="margin-top:8px">Morph Targets</h3>
-  <div id="morph-sliders"></div>
-</div>
-
 <script>
-(function(){
-"use strict";
-
-// ── DOM ───────────────────────────────────────────────────────────────────
-const unlockScreen = document.getElementById("unlock-screen");
-const canvas       = document.getElementById("three-canvas");
-const wrap         = document.getElementById("canvas-wrap");
-const loading      = document.getElementById("loading");
-const loadLabel    = document.getElementById("load-label");
-const errorMsg     = document.getElementById("error-msg");
-const statusDot    = document.getElementById("status-dot");
-const statusText   = document.getElementById("status-text");
-const debugPanel   = document.getElementById("debug-panel");
-const morphSlsEl   = document.getElementById("morph-sliders");
-const moodBtnsEl   = document.getElementById("mood-btns");
-const glowRing     = document.getElementById("glow-ring");
-const transcript   = document.getElementById("transcript");
-const tSpk         = document.getElementById("t-spk");
-const tTxt         = document.getElementById("t-txt");
-const moodBadge    = document.getElementById("mood-badge");
-const btnInterrupt = document.getElementById("btn-interrupt");
-const btnClear     = document.getElementById("btn-clear");
-const vadWrap      = document.getElementById("vad-wrap");
-const vbars        = Array.from(vadWrap.querySelectorAll(".vbar"));
-
-// ── State ─────────────────────────────────────────────────────────────────
-let state         = "idle";
-let audioCtx      = null;
-let audioUnlocked = false;
-let expressionData= null;
-let transcriptTmr = null;
-let interrupted   = false;
-
-// ── Recording ─────────────────────────────────────────────────────────────
-let micStream     = null;
-let mediaRecorder = null;
-let audioChunks   = [];
-let vadCtx        = null;
-let vadInterval   = null;
-let silenceStart  = null;
-let recordStart   = null;
-const SILENCE_MS  = 1600;
-const SILENCE_THR = 14;
-const MIN_SPEECH  = 800;
-
-// ── All lip morph names ────────────────────────────────────────────────────
-const LIP_MORPHS = [
-  "jawOpen","mouthFunnel","mouthPucker",
-  "mouthSmileLeft","mouthSmileRight",
-  "mouthStretchLeft","mouthStretchRight",
-  "mouthLowerDownLeft","mouthLowerDownRight",
-  "mouthUpperUpLeft","mouthUpperUpRight",
-  "mouthClose","mouthDimpleLeft","mouthDimpleRight",
-  "mouthPressLeft","mouthPressRight","mouthRollLower"
-];
-
-// ════════════════════════════════════════════════════════════════════════
-//  MORPH CONTROLLER
-// ════════════════════════════════════════════════════════════════════════
-const MorphController = (function(){
-  let meshes   = [];
-  const cur    = {};
-  const tgt    = {};
-  const spd    = {};  // per-morph speed override
-  const SPEED  = 0.18;  // increased for more responsive lip movement
-  let blinkTimer= null, wanderTimer= null;
-  let blinkCfg = null, eyeCfg = null;
-  let jawOvr   = 0;
-
-  function init(m){
-    meshes=m;
-    m.forEach(function(x){
-      Object.keys(x.dict).forEach(function(n){ cur[n]=0; tgt[n]=0; spd[n]=SPEED; });
-    });
-  }
-
-  function applyToMesh(name,val){
-    meshes.forEach(function(x){
-      if(x.dict[name]!==undefined)
-        x.mesh.morphTargetInfluences[x.dict[name]]=Math.max(0,Math.min(1,val));
-    });
-  }
-
-  function update(){
-    Object.keys(tgt).forEach(function(n){
-      if(n==="jawOpen"&&jawOvr>0){ cur[n]=jawOvr; applyToMesh(n,jawOvr); return; }
-      const d=tgt[n]-cur[n];
-      if(Math.abs(d)>0.001){ cur[n]+=d*(spd[n]||SPEED); applyToMesh(n,cur[n]); }
-    });
-  }
-
-  function setExpression(expr){
-    Object.keys(tgt).forEach(function(k){ tgt[k]=0; spd[k]=SPEED; });
-    Object.entries(expr||{}).forEach(function([k,v]){ if(tgt[k]!==undefined) tgt[k]=v; });
-  }
-
-  function setLipTarget(name,val,speed){
-    if(tgt[name]!==undefined){ tgt[name]=val; spd[name]=speed||SPEED; }
-  }
-
-  function setJaw(v){ jawOvr=v; }
-
-  function startBlink(cfg){
-    blinkCfg=cfg;
-    function sched(){
-      const d=cfg.interval_min_ms+Math.random()*(cfg.interval_max_ms-cfg.interval_min_ms);
-      blinkTimer=setTimeout(function(){
-        cfg.targets.forEach(function(t){ applyToMesh(t,1); });
-        setTimeout(function(){ cfg.targets.forEach(function(t){ applyToMesh(t,0); }); sched(); },cfg.duration_ms);
-      },d);
-    }
-    sched();
-  }
-
-  function startEyeWander(cfg){
-    eyeCfg=cfg;
-    function sched(){
-      const d=cfg.interval_min_ms+Math.random()*(cfg.interval_max_ms-cfg.interval_min_ms);
-      wanderTimer=setTimeout(function(){
-        const dirs=Object.keys(cfg.targets);
-        const dir=dirs[Math.floor(Math.random()*dirs.length)];
-        const amt=Math.random()*cfg.max_amount;
-        cfg.targets[dir].forEach(function(t){ applyToMesh(t,amt); });
-        setTimeout(function(){ cfg.targets[dir].forEach(function(t){ applyToMesh(t,0); }); sched(); },cfg.duration_ms);
-      },d);
-    }
-    sched();
-  }
-
-  return { init, update, setExpression, setLipTarget, setJaw, startBlink, startEyeWander };
-})();
-
-// ════════════════════════════════════════════════════════════════════════
-//  EXPRESSION ENGINE
-// ════════════════════════════════════════════════════════════════════════
-const ExpressionEngine = (function(){
-  const KW={
-    happy:["happy","glad","great","wonderful","love","enjoy","smile","fun","good","nice","pleased","fantastic","awesome"],
-    sad:["sad","sorry","unfortunate","difficult","hard","miss","hurt","pain","tragic","unhappy","worried"],
-    surprised:["wow","really","surprising","unexpected","amazing","incredible","oh","gosh","astonished"],
-    angry:["wrong","bad","terrible","awful","hate","frustrated","angry","annoying","ridiculous"],
-    thinking:["let me think","interesting","hmm","consider","perhaps","maybe","wonder","curious"],
-  };
-  let data=null,current="idle";
-  function init(d){ data=d; }
-  function detect(text){
-    if(!text) return "idle";
-    const low=text.toLowerCase(); let best="idle",score=0;
-    Object.entries(KW).forEach(function([mood,kws]){ let s=0; kws.forEach(function(k){ if(low.includes(k)) s++; }); if(s>score){score=s;best=mood;} });
-    return best;
-  }
-  function setMood(mood){
-    if(!data) return;
-    current=mood;
-    MorphController.setExpression(data.expressions[mood]||data.expressions["idle"]);
-    moodBadge.textContent=mood;
-    moodBadge.classList.toggle("visible",mood!=="idle");
-  }
-  function detectAndSet(text){ const m=detect(text); setMood(m); return m; }
-  function getCurrent(){ return current; }
-  return { init, setMood, detectAndSet, getCurrent };
-})();
-
-// ── Three.js ──────────────────────────────────────────────────────────────
-const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
-renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-renderer.outputEncoding=THREE.sRGBEncoding;
-renderer.toneMapping=THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure=1.2;
-const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(35,1,0.01,100);
-camera.position.set(0,0.05,1.8);
-const controls=new THREE.OrbitControls(camera,renderer.domElement);
-controls.enableDamping=true; controls.dampingFactor=0.06;
-controls.minDistance=0.4; controls.maxDistance=4.0;
-controls.target.set(0,0.05,0); controls.update();
-const kl=new THREE.DirectionalLight(0xfff5e0,1.8); kl.position.set(-1.5,2,2); scene.add(kl);
-const fl=new THREE.DirectionalLight(0xd0e8ff,0.6); fl.position.set(2,0.5,1);  scene.add(fl);
-const rl=new THREE.DirectionalLight(0x00e5ff,0.4); rl.position.set(0,-1,-2);  scene.add(rl);
-scene.add(new THREE.AmbientLight(0x111827,2.0));
-
-function onResize(){ const w=wrap.clientWidth,h=wrap.clientHeight; renderer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix(); }
-window.addEventListener("resize",onResize); onResize();
-
-// ── GLB Loader ────────────────────────────────────────────────────────────
-setStatus("Loading…","idle");
-new THREE.GLTFLoader().load("/models/head.glb",
-  function(gltf){
-    const root=gltf.scene;
-    const box=new THREE.Box3().setFromObject(root);
-    const sz=box.getSize(new THREE.Vector3());
-    const ct=box.getCenter(new THREE.Vector3());
-    const sc=1.0/Math.max(sz.x,sz.y,sz.z);
-    root.scale.setScalar(sc); root.position.sub(ct.multiplyScalar(sc));
-    scene.add(root);
-    const glbMeshes=[];
-    root.traverse(function(n){ if(n.isMesh&&n.morphTargetInfluences&&n.morphTargetDictionary) glbMeshes.push({mesh:n,dict:n.morphTargetDictionary}); });
-    MorphController.init(glbMeshes);
-    loading.classList.add("hidden");
-    setStatus("Tap to begin","idle");
-    buildDebugPanel(root);
-    loadExpressions();
-  },
-  function(xhr){ if(xhr.lengthComputable) loadLabel.textContent="Loading… "+Math.round(xhr.loaded/xhr.total*100)+"%"; },
-  function(err){ console.error(err); loading.classList.add("hidden"); errorMsg.classList.add("visible"); }
-);
-
-async function loadExpressions(){
-  try{
-    const r=await fetch("/expressions");
-    expressionData=await r.json();
-    ExpressionEngine.init(expressionData);
-    MorphController.startBlink(expressionData.blink);
-    MorphController.startEyeWander(expressionData.eye_wander);
-    ExpressionEngine.setMood("idle");
-    buildMoodButtons(expressionData.all_moods);
-    buildVisemeTestPanel();
-  }catch(e){ console.error("Expressions:",e); }
-
-  // FFT lip sync — no server fetch needed
-}
-
-// ── Unlock ─────────────────────────────────────────────────────────────────
-unlockScreen.addEventListener("click",function(){
-  audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-  audioUnlocked=true;
-  unlockScreen.classList.add("hidden");
-  startContinuousListening();
-});
-
-// ── Status ─────────────────────────────────────────────────────────────────
-function setStatus(label,s){
-  state=s; statusText.textContent=label;
-  statusDot.classList.remove("active","listening","thinking","speaking");
-  glowRing.classList.remove("listening","speaking");
-  if(s==="idle")       statusDot.classList.add("active");
-  if(s==="listening") {statusDot.classList.add("listening"); glowRing.classList.add("listening");}
-  if(s==="processing") statusDot.classList.add("thinking");
-  if(s==="speaking")  {statusDot.classList.add("speaking");  glowRing.classList.add("speaking");}
-  btnInterrupt.classList.toggle("visible",s==="speaking");
-}
-
-// ── Transcript ─────────────────────────────────────────────────────────────
-function showT(speaker,text,isAria,autoHide){
-  clearTimeout(transcriptTmr); tSpk.textContent=speaker; tTxt.textContent=text;
-  transcript.classList.toggle("aria",isAria); transcript.classList.add("visible");
-  if(autoHide) transcriptTmr=setTimeout(()=>transcript.classList.remove("visible"),autoHide);
-}
-function hideT(){ clearTimeout(transcriptTmr); transcript.classList.remove("visible"); }
-
-// ── VAD bars ────────────────────────────────────────────────────────────────
-function updateVADBars(data){
-  const step=Math.floor(data.length/vbars.length);
-  vbars.forEach(function(b,i){ b.style.height=Math.max(3,Math.round((data[i*step]||0)/255*24))+"px"; });
-}
-function flattenVADBars(){ vbars.forEach(function(b){ b.style.height="3px"; }); }
-
-// ════════════════════════════════════════════════════════════════════════
-//  AZURE VISEME LIP SYNC
-//
-//  Azure Speech SDK fires exact viseme timestamps as it synthesises audio.
-//  We schedule these using setTimeout against performance.now().
-//
-//  The audio plays via AudioBufferSourceNode scheduled at:
-//    audioCtx.currentTime + AUDIO_SCHEDULE_OFFSET
-//
-//  We fire visemes using setTimeout with the same offset so they
-//  arrive at exactly the same moment as the corresponding audio.
-//
-//  DIAGNOSTIC LOGGING: every viseme fire is logged to console
-//  so you can verify timing in browser DevTools.
-// ════════════════════════════════════════════════════════════════════════
-
-// ════════════════════════════════════════════════════════════════════════
-//  SMOOTH FFT LIP SYNC
-//
-//  Real-time frequency analysis of the audio stream.
-//  Instead of scheduled events, we read FFT bins every animation frame
-//  and map frequency bands to mouth shapes continuously.
-//
-//  The smooth blending architecture is preserved:
-//  - Fast attack (0.45) for opening movements
-//  - Slow decay (0.06) for closing movements
-//  - Result: mouth flows naturally, no snapping
-//
-//  FREQUENCY → MOUTH SHAPE:
-//  Bins 1-3  (~85-150Hz)  = low vowels  O,U  → jaw open, funnel
-//  Bins 2-5  (~150-250Hz) = mid vowels  AH,A → jaw wide, stretch
-//  Bins 4-8  (~250-400Hz) = high vowels EE,E → jaw mid, smile
-//  Bins 8-15 (~400-800Hz) = consonants  S,Z  → jaw closes slightly
-//  Bins 15-25(~800-1500Hz)= fricatives  F,V  → lower lip rolls
-// ════════════════════════════════════════════════════════════════════════
-
-let fftAnimFrame = null;
-let fftAnalyser  = null;
-const lipSmooth  = {};   // per-morph smoothed values
-const ATTACK     = 0.45; // fast — mouth opens quickly
-const DECAY      = 0.18; // moderate decay — mouth closes between words
-
-LIP_MORPHS.forEach(function(m){ lipSmooth[m] = 0; });
-
-function startFFTLipSync(analyserNode){
-  fftAnalyser = analyserNode;
-  const data  = new Uint8Array(analyserNode.frequencyBinCount);
-  cancelAnimationFrame(fftAnimFrame);
-
-  function frame(){
-    fftAnimFrame = requestAnimationFrame(frame);
-    analyserNode.getByteFrequencyData(data);
-
-    const avg = function(s,e){
-      let x=0; for(let i=s;i<=e;i++) x+=data[i];
-      return x/(e-s+1)/255;
-    };
-
-    const energy    = avg(1, 20);
-    const lowVowel  = avg(1, 3);
-    const midVowel  = avg(2, 5);
-    const highVowel = avg(4, 8);
-    const consonant = avg(8, 15);
-    const fricative = avg(15, 25);
-
-    function ema(morph, target){
-      const rate = target > lipSmooth[morph] ? ATTACK : DECAY;
-      lipSmooth[morph] += (target - lipSmooth[morph]) * rate;
-      MorphController.setLipTarget(morph, Math.max(0, Math.min(1, lipSmooth[morph])), 1.0);
-    }
-
-    if(energy < 0.06){
-      // Silence — close mouth actively
-      LIP_MORPHS.forEach(function(m){
-        lipSmooth[m] *= 0.75;  // faster close during silence
-        MorphController.setLipTarget(m, lipSmooth[m], 1.0);
-      });
-      return;
-    }
-
-    // Map frequency bands to ARKit morphs
-    ema("jawOpen",              Math.min(0.40, lowVowel*0.50 + midVowel*0.35 + highVowel*0.15));
-    ema("mouthFunnel",          Math.min(0.38, lowVowel*0.52));
-    ema("mouthPucker",          Math.min(0.28, lowVowel*0.38));
-    ema("mouthStretchLeft",     Math.min(0.30, midVowel*0.42));
-    ema("mouthStretchRight",    Math.min(0.30, midVowel*0.42));
-    ema("mouthSmileLeft",       Math.min(0.42, highVowel*0.48));
-    ema("mouthSmileRight",      Math.min(0.42, highVowel*0.48));
-    ema("mouthDimpleLeft",      Math.min(0.22, highVowel*0.28));
-    ema("mouthDimpleRight",     Math.min(0.22, highVowel*0.28));
-    ema("mouthLowerDownLeft",   Math.min(0.28, (midVowel+lowVowel)*0.20));
-    ema("mouthLowerDownRight",  Math.min(0.28, (midVowel+lowVowel)*0.20));
-    ema("mouthUpperUpLeft",     Math.min(0.18, midVowel*0.22));
-    ema("mouthUpperUpRight",    Math.min(0.18, midVowel*0.22));
-    ema("mouthRollLower",       Math.min(0.28, fricative*0.42));
-    ema("mouthPressLeft",       Math.min(0.22, Math.max(0, avg(0,1)*1.8 - energy)*0.38));
-    ema("mouthPressRight",      Math.min(0.22, Math.max(0, avg(0,1)*1.8 - energy)*0.38));
-    // Consonants reduce jaw slightly
-    lipSmooth["jawOpen"] = Math.max(0, lipSmooth["jawOpen"] - Math.min(0.06, consonant*0.12));
-  }
-
-  fftAnimFrame = requestAnimationFrame(frame);
-}
-
-function stopLipSync(){
-  cancelAnimationFrame(fftAnimFrame);
-  fftAnimFrame = null;
-  fftAnalyser  = null;
-  LIP_MORPHS.forEach(function(m){ lipSmooth[m]=0; MorphController.setLipTarget(m,0,0.06); });
-}
-
-// ════════════════════════════════════════════════════════════════════════
-//  CONTINUOUS LISTENING
-// ════════════════════════════════════════════════════════════════════════
-async function startContinuousListening(){
-  if(state==="processing"||state==="speaking") return;
-  if(micStream) stopMic();
-
-  try{
-    micStream=await navigator.mediaDevices.getUserMedia({audio:true,video:false});
-  }catch(e){
-    setStatus("Mic denied","idle");
-    alert("Microphone access denied. Allow mic and reload.");
-    return;
-  }
-
-  audioChunks=[]; recordStart=Date.now(); silenceStart=null;
-  const mime=MediaRecorder.isTypeSupported("audio/webm;codecs=opus")?"audio/webm;codecs=opus"
-            :MediaRecorder.isTypeSupported("audio/webm")?"audio/webm":"audio/mp4";
-  mediaRecorder=new MediaRecorder(micStream,{mimeType:mime});
-  mediaRecorder.ondataavailable=function(e){ if(e.data.size>0) audioChunks.push(e.data); };
-  mediaRecorder.onstop=onSpeechEnd;
-  mediaRecorder.start(150);
-
-  setStatus("Listening…","listening");
-  ExpressionEngine.setMood("listening");
-
-  vadCtx=new (window.AudioContext||window.webkitAudioContext)();
-  const src=vadCtx.createMediaStreamSource(micStream);
-  const an=vadCtx.createAnalyser(); an.fftSize=256;
-  src.connect(an);
-  const data=new Uint8Array(an.frequencyBinCount);
-
-  vadInterval=setInterval(function(){
-    an.getByteFrequencyData(data);
-    updateVADBars(data);
-    let sum=0; for(let i=0;i<data.length;i++) sum+=data[i];
-    const avg=sum/data.length;
-    const elapsed=Date.now()-recordStart;
-    if(avg<SILENCE_THR){
-      if(!silenceStart) silenceStart=Date.now();
-      if(elapsed>MIN_SPEECH&&Date.now()-silenceStart>SILENCE_MS){
-        clearInterval(vadInterval); vadInterval=null;
-        vadCtx.close().catch(()=>{}); vadCtx=null;
-        stopMic();
-      }
-    } else { silenceStart=null; }
-  },80);
-}
-
-function stopMic(){
-  if(mediaRecorder&&mediaRecorder.state!=="inactive") mediaRecorder.stop();
-  if(micStream){ micStream.getTracks().forEach(t=>t.stop()); micStream=null; }
-}
-
-// ── On speech end ──────────────────────────────────────────────────────────
-async function onSpeechEnd(){
-  flattenVADBars();
-  const mime=mediaRecorder?mediaRecorder.mimeType:"audio/webm";
-  const blob=new Blob(audioChunks,{type:mime});
-  if(blob.size<5000){ startContinuousListening(); return; }
-
-  setStatus("Processing…","processing");
-  ExpressionEngine.setMood("thinking");
-  showT("You","…",false,null);
-
-  const form=new FormData();
-  form.append("audio",blob,"speech.webm");
-
-  // Track when we sent the request — for perceived latency logging
-  const t0 = performance.now();
-
-  try{
-    const r=await fetch("/pipeline",{method:"POST",body:form});
-    const d=await r.json();
-
-    console.log("[Pipeline] response in", (performance.now()-t0).toFixed(0)+"ms");
-
-    if(d.error){
-      showT("Error",d.error,false,3000);
-      setStatus("Listening…","listening");
-      startContinuousListening();
-      return;
-    }
-
-    showT("You",d.user_text,false,5000);
-    ExpressionEngine.detectAndSet(d.reply);
-
-    // Pass viseme_sequences from Azure SDK
-    await playResponse(d.audio_b64, d.reply, d.viseme_sequences||[]);
-
-  }catch(e){
-    console.error("Pipeline:",e);
-    showT("Error","Server unreachable.",false,3000);
-    setStatus("Listening…","listening");
-    startContinuousListening();
-  }
-}
-
-// ════════════════════════════════════════════════════════════════════════
-//  AUDIO PLAYBACK + VISEME SYNC
-// ════════════════════════════════════════════════════════════════════════
-async function playResponse(audio_b64, fullText, viseme_sequences){
-  if(!audio_b64||audio_b64.length===0){ afterSpeaking(); return; }
-  interrupted=false;
-  setStatus("Speaking…","speaking");
-  showT("ARIA",fullText,true,null);
-
-  if(expressionData){
-    const spk=expressionData.expressions["speaking"]||{};
-    const mood=expressionData.expressions[ExpressionEngine.getCurrent()]||{};
-    MorphController.setExpression(Object.assign({},mood,spk));
-  }
-  if(audioCtx.state==="suspended") await audioCtx.resume();
-
-  // Decode all base64 MP3s to AudioBuffers in parallel
-  const decodeStart = performance.now();
-  const decodePromises=audio_b64.map(function(b64){
-    if(!b64) return Promise.resolve(null);
-    try{
-      const bin=atob(b64);
-      const bytes=new Uint8Array(bin.length);
-      for(let i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i);
-      return audioCtx.decodeAudioData(bytes.buffer);
-    }catch(e){ return Promise.resolve(null); }
-  });
-
-  let buffers;
-  try{ buffers=await Promise.all(decodePromises); }
-  catch(e){ console.error("Decode failed:",e); afterSpeaking(); return; }
-  if(interrupted) return;
-
-  const decodeMs = performance.now() - decodeStart;
-  console.log("[Audio] Decode took",decodeMs.toFixed(0),"ms for",buffers.filter(Boolean).length,"buffers");
-
-  // Single analyser node — all buffers route through it for FFT lip sync
-  const analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 256;
-  analyser.smoothingTimeConstant = 0.55;
-  analyser.connect(audioCtx.destination);
-
-  // Schedule all buffers gaplessly, routed through the analyser
-  const sources=[];
-  let clock = audioCtx.currentTime + 0.04;
-
-  buffers.forEach(function(buf,i){
-    if(!buf||interrupted) return;
-    const src=audioCtx.createBufferSource();
-    src.buffer=buf;
-    src.connect(analyser);  // through analyser, not directly to destination
-    src.start(clock);
-    sources.push(src);
-    console.log("[Audio] Sentence",i,"scheduled at +"+(( clock-audioCtx.currentTime)*1000).toFixed(0)+"ms, duration="+(buf.duration*1000).toFixed(0)+"ms");
-    clock+=buf.duration;
-  });
-
-  if(sources.length===0){ afterSpeaking(); return; }
-
-  // Start FFT lip sync reading from shared analyser
-  startFFTLipSync(analyser);
-
-  const totalDuration=clock-audioCtx.currentTime;
-  console.log("[Audio] Total duration:"+(totalDuration*1000).toFixed(0)+"ms");
-
-  window._currentSources=function(){
-    sources.forEach(function(s){ try{s.stop();}catch(e){} });
-    stopLipSync();
-  };
-
-  await new Promise(function(resolve){
-    sources[sources.length-1].onended=resolve;
-    setTimeout(resolve,(totalDuration+2)*1000);
-  });
-  if(!interrupted) afterSpeaking();
-}
-
-function afterSpeaking(){
-  stopLipSync();
-  window._currentSources=null;
-  transcriptTmr=setTimeout(hideT,3000);
-  ExpressionEngine.setMood("idle");
-  setStatus("Listening…","listening");
-  startContinuousListening();
-}
-
-// ── Interrupt ──────────────────────────────────────────────────────────────
-function interrupt(){
-  interrupted=true;
-  if(window._currentSources){ try{window._currentSources();}catch(e){} window._currentSources=null; }
-  stopLipSync();
-  clearInterval(vadInterval); vadInterval=null;
-  if(vadCtx){ vadCtx.close().catch(()=>{}); vadCtx=null; }
-  stopMic();
-  hideT();
-  ExpressionEngine.setMood("idle");
-  setStatus("Listening…","listening");
-  startContinuousListening();
-}
-
-// ── Buttons ────────────────────────────────────────────────────────────────
-btnInterrupt.addEventListener("click",interrupt);
-btnClear.addEventListener("click",function(){
-  interrupt();
-  fetch("/clear",{method:"POST"});
-  showT("System","Conversation cleared.",false,2000);
-});
-document.addEventListener("keydown",function(e){
-  if(e.code==="Space"&&e.target===document.body){ e.preventDefault(); interrupt(); }
-  if(e.key==="d"||e.key==="D") debugPanel.classList.toggle("visible");
-});
-
-// ── Debug panel ────────────────────────────────────────────────────────────
-function buildMoodButtons(moods){
-  moods.forEach(function(mood){
-    const btn=document.createElement("button"); btn.className="mood-btn"; btn.textContent=mood;
-    btn.addEventListener("click",function(){ document.querySelectorAll(".mood-btn").forEach(b=>b.classList.remove("active")); btn.classList.add("active"); ExpressionEngine.setMood(mood); });
-    moodBtnsEl.appendChild(btn);
-  });
-}
-
-// Build viseme test buttons in debug panel
-// Press D, then tap each viseme button to see the exact mouth shape
-// Use this to verify each viseme looks correct and tune if needed
-function buildVisemeTestPanel(){
-  const panel = document.getElementById("debug-panel");
-  const h = document.createElement("h3");
-  h.style.marginTop="12px"; h.textContent="Viseme Test (hold to see)";
-  panel.appendChild(h);
-
-  // The 22 Azure viseme IDs with their phoneme descriptions
-  const VISEME_LABELS = {
-    0:"0 silence",1:"1 ae/ah",2:"2 aa wide",3:"3 ao round",
-    4:"4 ey/eh",5:"5 er",6:"6 ee/ih",7:"7 oo tight",
-    8:"8 ow mid",9:"9 aw",10:"10 oy",11:"11 ay",
-    12:"12 h",13:"13 r",14:"14 l",15:"15 s/z",
-    16:"16 sh/ch",17:"17 th",18:"18 f/v",19:"19 d/t/n",
-    20:"20 k/g",21:"21 p/b/m"
-  };
-
-  const wrap = document.createElement("div");
-  wrap.style.cssText="display:flex;flex-wrap:wrap;gap:3px;margin-top:6px;";
-
-  Object.entries(VISEME_LABELS).forEach(function([id, label]){
-    const btn = document.createElement("button");
-    btn.className = "mood-btn";
-    btn.textContent = label;
-    btn.style.fontSize = "0.6rem";
-    btn.style.padding = "2px 5px";
-
-    // Show viseme on mousedown/touchstart, clear on mouseup/touchend
-    function show(){ applyViseme(parseInt(id)); }
-    function hide(){ applyViseme(0); }
-
-    btn.addEventListener("mousedown", show);
-    btn.addEventListener("mouseup",   hide);
-    btn.addEventListener("mouseleave",hide);
-    btn.addEventListener("touchstart", function(e){ e.preventDefault(); show(); });
-    btn.addEventListener("touchend",   function(e){ e.preventDefault(); hide(); });
-
-    wrap.appendChild(btn);
-  });
-  panel.appendChild(wrap);
-
-  // Also add a morph intensity slider for quick calibration
-  const sliderWrap = document.createElement("div");
-  sliderWrap.style.cssText="margin-top:10px;";
-  sliderWrap.innerHTML=`
-    <div style="color:var(--muted);font-size:0.65rem;margin-bottom:4px">Viseme Scale (all weights × this)</div>
-    <input type="range" id="viseme-scale" min="0.1" max="3.0" step="0.05" value="1.0" style="width:100%;accent-color:var(--accent)"/>
-    <div id="viseme-scale-val" style="color:var(--accent);font-size:0.65rem;text-align:right">1.0×</div>
-  `;
-  panel.appendChild(sliderWrap);
-
-  const scaleSlider = document.getElementById("viseme-scale");
-  const scaleVal    = document.getElementById("viseme-scale-val");
-  scaleSlider.addEventListener("input", function(){
-    window.VISEME_SCALE = parseFloat(scaleSlider.value);
-    scaleVal.textContent = scaleSlider.value + "×";
-  });
-}
-
-// Global viseme scale — adjust via debug panel slider
-window.VISEME_SCALE = 1.0;
-function buildDebugPanel(root){
-  root.traverse(function(node){
-    if(!node.isMesh||!node.morphTargetInfluences) return;
-    Object.entries(node.morphTargetDictionary||{}).forEach(function([name,idx]){
-      const row=document.createElement("div"); row.className="morph-row";
-      row.innerHTML=`<label title="${name}">${name}</label><input type="range" min="0" max="1" step="0.01" value="0"/>`;
-      row.querySelector("input").addEventListener("input",function(){ node.morphTargetInfluences[idx]=parseFloat(this.value); });
-      morphSlsEl.appendChild(row);
-    });
-  });
-}
-
-// ── Render loop ────────────────────────────────────────────────────────────
-function animate(){ requestAnimationFrame(animate); controls.update(); MorphController.update(); renderer.render(scene,camera); }
-animate();
-
-})();
+document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
