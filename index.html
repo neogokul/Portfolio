@@ -8,261 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
-<style>
-:root{
-  --bg:#0B0D10;
-  --surface:#14171B;
-  --surface2:#1B1F24;
-  --border:#2A2F35;
-  --orange:#FF6B1A;
-  --blue:#4FA8D8;
-  --text:#F2F1EC;
-  --muted:#9AA1A9;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:'Inter',sans-serif;
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
-}
-h1,h2,h3,h4{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:0.03em;font-weight:600;}
-.mono{font-family:'IBM Plex Mono',monospace;}
-a{color:inherit}
-img{max-width:100%;display:block}
-.wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
-section{padding:96px 0;border-bottom:1px solid var(--border);}
-
-/* ---------- NAV ---------- */
-header{
-  position:sticky;top:0;z-index:100;
-  background:rgba(11,13,16,0.92);
-  backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--border);
-}
-.nav-inner{
-  max-width:1180px;margin:0 auto;padding:16px 24px;
-  display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:12px;
-}
-.brand{font-family:'Oswald',sans-serif;font-weight:700;font-size:1.05rem;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap;}
-.brand span{color:var(--orange);}
-nav ul{list-style:none;display:flex;gap:clamp(10px,2.5vw,28px);flex-wrap:wrap;}
-nav a{
-  font-family:'IBM Plex Mono',monospace;
-  font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;
-  color:var(--muted);text-decoration:none;padding:4px 2px;
-  border-bottom:2px solid transparent;transition:color .2s,border-color .2s;
-  white-space:nowrap;
-}
-nav a:hover{color:var(--orange);border-color:var(--orange);}
-
-/* ---------- HERO / DATA PLATE ---------- */
-#hero{padding:72px 0 96px;border-bottom:1px solid var(--border);}
-.plate{
-  position:relative;
-  background:linear-gradient(180deg,var(--surface2),var(--surface));
-  border:1px solid var(--border);
-  border-radius:6px;
-  padding:48px clamp(24px,5vw,64px);
-  display:grid;
-  grid-template-columns:1.3fr 1fr;
-  gap:40px;
-  box-shadow:0 20px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.03);
-}
-.rivet{
-  position:absolute;width:12px;height:12px;border-radius:50%;
-  background:radial-gradient(circle at 35% 30%, #6b7078, #23262b 70%);
-  box-shadow:0 1px 2px rgba(0,0,0,0.6), inset 0 0 2px rgba(0,0,0,0.8);
-}
-.rivet.tl{top:14px;left:14px}.rivet.tr{top:14px;right:14px}
-.rivet.bl{bottom:14px;left:14px}.rivet.br{bottom:14px;right:14px}
-.plate-eyebrow{
-  font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.16em;
-  color:var(--orange);text-transform:uppercase;margin-bottom:14px;
-}
-.plate h1{font-size:clamp(1.7rem,6.5vw,3.2rem);line-height:1.12;margin-bottom:18px;overflow-wrap:break-word;word-break:break-word;}
-.plate h1 .accent{color:var(--orange)}
-.plate-role{font-size:1.05rem;color:var(--muted);margin-bottom:24px;max-width:46ch;}
-.tag-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px;}
-.tag{
-  font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.04em;
-  border:1px solid var(--border);color:var(--muted);padding:5px 10px;border-radius:3px;
-  background:rgba(255,255,255,0.02);
-}
-.hero-links{display:flex;gap:14px;flex-wrap:wrap;}
-.btn{
-  font-family:'IBM Plex Mono',monospace;font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;
-  padding:12px 22px;border-radius:3px;text-decoration:none;font-weight:600;
-  border:1px solid var(--orange);color:var(--orange);transition:background .2s,color .2s;
-}
-.btn:hover{background:var(--orange);color:#0B0D10;}
-.btn.ghost{border-color:var(--border);color:var(--muted);}
-.btn.ghost:hover{border-color:var(--blue);color:var(--blue);background:transparent;}
-
-.plate-data{
-  border-left:1px solid var(--border);
-  padding-left:clamp(20px,3vw,40px);
-  display:flex;flex-direction:column;justify-content:center;gap:16px;
-}
-.data-row{display:flex;justify-content:space-between;gap:12px;font-family:'IBM Plex Mono',monospace;font-size:0.78rem;border-bottom:1px dashed var(--border);padding-bottom:10px;}
-.data-row .k{color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;}
-.data-row .v{color:var(--text);text-align:right;}
-
-@media (max-width:820px){
-  .plate{grid-template-columns:1fr;}
-  .plate-data{border-left:none;border-top:1px solid var(--border);padding-left:0;padding-top:24px;}
-}
-
-/* ---------- SECTION HEADS ---------- */
-.eyebrow{
-  font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.18em;
-  color:var(--blue);text-transform:uppercase;margin-bottom:10px;
-}
-.sec-head{margin-bottom:44px;max-width:70ch;}
-.sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);margin-bottom:12px;}
-.sec-head p{color:var(--muted);}
-
-.notice-plate{
-  display:flex;gap:12px;align-items:flex-start;
-  margin-top:20px;padding:14px 18px;max-width:70ch;
-  background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--orange);
-  border-radius:4px;
-}
-.notice-plate .notice-icon{
-  font-family:'IBM Plex Mono',monospace;font-size:0.68rem;font-weight:600;letter-spacing:0.06em;
-  color:var(--orange);white-space:nowrap;padding-top:1px;
-}
-.notice-plate p{
-  font-family:'IBM Plex Mono',monospace;font-size:0.74rem;line-height:1.7;
-  color:var(--muted);letter-spacing:0.01em;
-}
-
-/* ---------- ABOUT ---------- */
-#about p.lead{font-size:1.05rem;color:var(--text);max-width:74ch;margin-bottom:28px;}
-.about-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 32px;max-width:900px;}
-.about-grid li{list-style:none;position:relative;padding-left:22px;color:var(--muted);font-size:0.95rem;}
-.about-grid li::before{content:"▸";position:absolute;left:0;color:var(--orange);}
-@media (max-width:640px){.about-grid{grid-template-columns:1fr;}}
-
-/* ---------- SPEC SHEET (skills table) ---------- */
-.spec-table{width:100%;border-collapse:collapse;overflow-x:auto;display:block;}
-.spec-table tbody{display:table;width:100%;}
-.spec-table tr{border-bottom:1px solid var(--border);}
-.spec-table tr:first-child{border-top:1px solid var(--border);}
-.spec-table td{padding:16px 18px;vertical-align:top;font-size:0.9rem;}
-.spec-table td.label{
-  width:220px;font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.06em;
-  color:var(--orange);text-transform:uppercase;white-space:nowrap;
-}
-.spec-table td.val{color:var(--muted);}
-.table-scroll{overflow-x:auto;border:1px solid var(--border);border-radius:4px;background:var(--surface);}
-
-/* ---------- WORK / CASE STUDIES ---------- */
-.case{
-  padding:40px 0;border-bottom:1px solid var(--border);
-}
-.case:last-child{border-bottom:none;padding-bottom:0;}
-.case:first-child{padding-top:0;}
-.case-head{margin-bottom:20px;}
-.asbuilt{
-  border:1px solid var(--border);background:var(--surface);border-radius:6px;
-  overflow:hidden;position:relative;margin-bottom:24px;
-}
-.asbuilt .gallery{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
-  background:var(--border);
-}
-@media (max-width:640px){
-  .asbuilt .gallery{grid-template-columns:1fr;}
-}
-.asbuilt .shot{
-  aspect-ratio:4/3;background:var(--surface2);
-  display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
-}
-.asbuilt img{width:100%;height:100%;object-fit:cover;display:block;}
-.asbuilt .shot .placeholder{
-  display:none;flex-direction:column;align-items:center;justify-content:center;gap:6px;
-  color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:0.62rem;letter-spacing:0.03em;
-  text-align:center;padding:10px;text-transform:uppercase;line-height:1.5;
-}
-.asbuilt img.broken{display:none;}
-.asbuilt img.broken + .placeholder{display:flex;}
-.asbuilt .cap{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:10px 14px;border-top:1px solid var(--border);
-  font-family:'IBM Plex Mono',monospace;font-size:0.66rem;letter-spacing:0.06em;
-  color:var(--muted);text-transform:uppercase;
-}
-.asbuilt .cap .rev{color:var(--orange);}
-
-.case-body h3{font-size:1.35rem;margin-bottom:4px;}
-.case-role{font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.06em;color:var(--blue);text-transform:uppercase;margin-bottom:16px;}
-.case-block{margin-bottom:14px;}
-.case-block .k{
-  font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.1em;color:var(--orange);
-  text-transform:uppercase;margin-bottom:6px;display:block;
-}
-.case-block p, .case-block ul{color:var(--muted);font-size:0.92rem;}
-.case-block ul{padding-left:18px;}
-.case-block li{margin-bottom:4px;}
-
-/* ---------- REVISION LOG ---------- */
-.revlog{width:100%;border-collapse:collapse;}
-.revlog thead th{
-  font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;
-  color:var(--orange);text-align:left;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface2);
-}
-.revlog td{padding:16px;border-bottom:1px solid var(--border);vertical-align:top;font-size:0.88rem;}
-.revlog td.rev{
-  font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--orange);width:56px;text-align:center;
-}
-.revlog td.period{font-family:'IBM Plex Mono',monospace;color:var(--muted);white-space:nowrap;width:150px;}
-.revlog td.role{color:var(--text);font-weight:500;}
-.revlog td.org{color:var(--muted);font-size:0.82rem;display:block;margin-top:2px;}
-.revlog td.desc{color:var(--muted);}
-.revlog tr:last-child td{border-bottom:none;}
-
-/* ---------- EDUCATION ---------- */
-.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
-.edu-card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:24px;}
-.edu-card h4{font-size:1rem;margin-bottom:6px;}
-.edu-card .org{color:var(--blue);font-family:'IBM Plex Mono',monospace;font-size:0.78rem;margin-bottom:4px;}
-.edu-card .meta{color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:0.72rem;}
-
-/* ---------- HOBBY PROJECTS ---------- */
-.hobby-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
-.hobby-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:6px;
-  padding:24px;display:flex;flex-direction:column;gap:12px;text-decoration:none;color:inherit;
-  transition:border-color .2s,transform .2s;
-}
-.hobby-card:hover{border-color:var(--blue);transform:translateY(-2px);}
-.hobby-card .tag-row{margin-bottom:0;}
-.hobby-card h4{font-size:1.05rem;}
-.hobby-card p{color:var(--muted);font-size:0.88rem;}
-.hobby-card .cta{
-  font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;
-  color:var(--blue);margin-top:auto;
-}
-
-/* ---------- CONTACT ---------- */
-#contact{border-bottom:none;}
-.contact-plate{
-  background:var(--surface2);border:1px solid var(--border);border-radius:6px;
-  padding:48px clamp(24px,5vw,56px);display:flex;flex-wrap:wrap;gap:32px;justify-content:space-between;align-items:center;
-  position:relative;
-}
-.contact-plate h2{font-size:clamp(1.5rem,3vw,2rem);margin-bottom:10px;}
-.contact-plate p{color:var(--muted);max-width:44ch;}
-.contact-links{display:flex;flex-direction:column;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:0.85rem;}
-.contact-links a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--border);padding-bottom:2px;transition:color .2s,border-color .2s;}
-.contact-links a:hover{color:var(--orange);border-color:var(--orange);}
-
-footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.04em;}
-</style>
+<link rel="stylesheet" href="assets/site.css"/>
 </head>
 <body>
 
@@ -409,308 +155,124 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
       </div>
     </div>
 
-    <!-- 1 -->
-    <div class="case">
-      <div class="case-body">
-        <div class="case-head">
-          <h3>Automated Sorting &amp; Handling Line</h3>
-          <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+    <div class="work-grid">
+      <a class="work-card" href="work/sorting-system.html">
+        <div class="thumb">
+          <img data-base="images/sorting-system-1" alt="Automated Sorting & Handling Line — as-built reference" loading="lazy" class="auto-img"/>
+          <div class="placeholder">Image pending<br/>images/sorting-system-1.*</div>
+          <span class="rev-tag">Rev C</span>
         </div>
-        <div class="asbuilt">
-        <div class="gallery">
-          <div class="shot">
-            <img data-base="images/sorting-system-1" alt="Automated Sorting & Handling Line — as-built reference — photo 1" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/sorting-system-1.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/sorting-system-2" alt="Automated Sorting & Handling Line — as-built reference — photo 2" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/sorting-system-2.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/sorting-system-3" alt="Automated Sorting & Handling Line — as-built reference — photo 3" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/sorting-system-3.*</div>
-          </div>
+        <div class="body">
+          <h3>Automated Sorting & Handling Line</h3>
+          <div class="role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <p class="brief">A fully automated sorting architecture built for high-throughput, low-intervention insect-rearing production.</p>
+          <span class="cta">View Project &rarr;</span>
         </div>
-          <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
+      </a>
+      <a class="work-card" href="work/hibernation-tunnel.html">
+        <div class="thumb">
+          <img data-base="images/hibernation-tunnel-1" alt="Cold-Tunnel Hibernation Sorter — as-built reference" loading="lazy" class="auto-img"/>
+          <div class="placeholder">Image pending<br/>images/hibernation-tunnel-1.*</div>
+          <span class="rev-tag">Rev C</span>
         </div>
-        <div class="case-block"><span class="k">Problem</span><p>A hygienic insect-rearing production line needed a fully automated sorting architecture capable of high throughput with minimal manual intervention.</p></div>
-        <div class="case-block"><span class="k">Approach</span><ul>
-          <li>Led concept development, feasibility evaluation, and mechanical architecture definition</li>
-          <li>Designed modular conveyor and channelising systems, integrating sensors, actuators, and decision-based separation</li>
-          <li>Validated iteratively via rapid prototyping (3D printing &amp; CNC), then oversaw fabrication, assembly, and commissioning</li>
-        </ul></div>
-        <div class="case-block"><span class="k">Result</span><p>Multi-channel flow architecture eliminated bottlenecks and a fail-safe distribution system maintained uptime, reducing manual handling while improving stability and throughput on the production floor.</p></div>
-      </div>
-    </div>
-
-    <!-- 2 -->
-    <div class="case">
-      <div class="case-body">
-        <div class="case-head">
+        <div class="body">
           <h3>Cold-Tunnel Hibernation Sorter</h3>
-          <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <div class="role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <p class="brief">A forced-convection cold tunnel that safely hibernates product for consistent downstream handling.</p>
+          <span class="cta">View Project &rarr;</span>
         </div>
-        <div class="asbuilt">
-        <div class="gallery">
-          <div class="shot">
-            <img data-base="images/hibernation-tunnel-1" alt="Cold-Tunnel Hibernation Sorter — as-built reference — photo 1" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/hibernation-tunnel-1.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/hibernation-tunnel-2" alt="Cold-Tunnel Hibernation Sorter — as-built reference — photo 2" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/hibernation-tunnel-2.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/hibernation-tunnel-3" alt="Cold-Tunnel Hibernation Sorter — as-built reference — photo 3" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/hibernation-tunnel-3.*</div>
-          </div>
+      </a>
+      <a class="work-card" href="work/loader-system.html">
+        <div class="thumb">
+          <img data-base="images/loader-system-1" alt="AI-Guided Trolley Loader — as-built reference" loading="lazy" class="auto-img"/>
+          <div class="placeholder">Image pending<br/>images/loader-system-1.*</div>
+          <span class="rev-tag">Rev C</span>
         </div>
-          <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
-        </div>
-        <div class="case-block"><span class="k">Problem</span><p>Downstream handling and quality checks required product to be temporarily and safely hibernated via controlled cooling, without breaching biosecurity or uniformity requirements.</p></div>
-        <div class="case-block"><span class="k">Approach</span><ul>
-          <li>Engineered a multi-fan forced-convection cooling system for uniform airflow and thermal gradients across the tunnel</li>
-          <li>Integrated a precision wiper mechanism to distribute product evenly for consistent thermal exposure</li>
-          <li>Designed a converging guide to feed the cooling channel, and a feedscrew-driven transport to regulate residence time</li>
-        </ul></div>
-        <div class="case-block"><span class="k">Result</span><p>Consistent hibernation duration and thermal exposure across every unit, with mechanical sealing preventing humid-air ingress — scaled cleanly into full production.</p></div>
-      </div>
-    </div>
-
-    <!-- 3 -->
-    <div class="case">
-      <div class="case-body">
-        <div class="case-head">
+        <div class="body">
           <h3>AI-Guided Trolley Loader</h3>
-          <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <div class="role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <p class="brief">An AI-guided trolley loader automating fill accuracy across 63 trays.</p>
+          <span class="cta">View Project &rarr;</span>
         </div>
-        <div class="asbuilt">
-        <div class="gallery">
-          <div class="shot">
-            <img data-base="images/loader-system-1" alt="AI-Guided Trolley Loader — as-built reference — photo 1" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/loader-system-1.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/loader-system-2" alt="AI-Guided Trolley Loader — as-built reference — photo 2" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/loader-system-2.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/loader-system-3" alt="AI-Guided Trolley Loader — as-built reference — photo 3" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/loader-system-3.*</div>
-          </div>
+      </a>
+      <a class="work-card" href="work/inversion-separation.html">
+        <div class="thumb">
+          <img data-base="images/inversion-separation-1" alt="Single-Actuator Inversion &amp; Separation — as-built reference" loading="lazy" class="auto-img"/>
+          <div class="placeholder">Image pending<br/>images/inversion-separation-1.*</div>
+          <span class="rev-tag">Rev C</span>
         </div>
-          <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
-        </div>
-        <div class="case-block"><span class="k">Problem</span><p>Manual trolley loading across 63 trays was labour-intensive and inconsistent, limiting throughput and scalability.</p></div>
-        <div class="case-block"><span class="k">Approach</span><ul>
-          <li>Designed a multi-channel channeliser and belt-driven shuttle conveyor for precise tray positioning</li>
-          <li>Integrated an AI vision system to detect load size and dynamically regulate fill level per tray</li>
-          <li>Engineered secure locking to dock and stabilise the trolley, with multiple flow-control gates to balance distribution</li>
-        </ul></div>
-        <div class="case-block"><span class="k">Result</span><p>Full automation of multi-tray loading with AI-controlled fill accuracy, cutting manpower requirements while improving throughput and handling stability.</p></div>
-      </div>
-    </div>
-
-    <!-- 4 -->
-    <div class="case">
-      <div class="case-body">
-        <div class="case-head">
+        <div class="body">
           <h3>Single-Actuator Inversion &amp; Separation</h3>
-          <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <div class="role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <p class="brief">A single-actuator feedscrew system consolidating inversion and separation into one motion.</p>
+          <span class="cta">View Project &rarr;</span>
         </div>
-        <div class="asbuilt">
-        <div class="gallery">
-          <div class="shot">
-            <img data-base="images/inversion-separation-1" alt="Single-Actuator Inversion & Separation — as-built reference — photo 1" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/inversion-separation-1.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/inversion-separation-2" alt="Single-Actuator Inversion & Separation — as-built reference — photo 2" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/inversion-separation-2.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/inversion-separation-3" alt="Single-Actuator Inversion & Separation — as-built reference — photo 3" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/inversion-separation-3.*</div>
-          </div>
+      </a>
+      <a class="work-card" href="work/channelising-system.html">
+        <div class="thumb">
+          <img data-base="images/channelising-system-1" alt="Non-Contact Channeliser — as-built reference" loading="lazy" class="auto-img"/>
+          <div class="placeholder">Image pending<br/>images/channelising-system-1.*</div>
+          <span class="rev-tag">Rev C</span>
         </div>
-          <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
-        </div>
-        <div class="case-block"><span class="k">Problem</span><p>Downstream processing needed capsule inversion and product separation, but separate actuation stages added cost and mechanical complexity.</p></div>
-        <div class="case-block"><span class="k">Approach</span><ul>
-          <li>Defined a precision tolerancing strategy for synchronised inversion and separation</li>
-          <li>Developed a feedscrew system that performs both inversion and separation from a single actuator</li>
-          <li>Engineered a tight-tolerance separator for reliable product extraction, with feedscrew-driven transport for uniform feeding</li>
-        </ul></div>
-        <div class="case-block"><span class="k">Result</span><p>Actuator consolidation reduced mechanical complexity while improving extraction consistency and overall line stability.</p></div>
-      </div>
-    </div>
-
-    <!-- 5 -->
-    <div class="case">
-      <div class="case-body">
-        <div class="case-head">
+        <div class="body">
           <h3>Non-Contact Channeliser</h3>
-          <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <div class="role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <p class="brief">A non-contact channeliser solving bulk-crystal jamming at the entry to individual flow lines.</p>
+          <span class="cta">View Project &rarr;</span>
         </div>
-        <div class="asbuilt">
-        <div class="gallery">
-          <div class="shot">
-            <img data-base="images/channelising-system-1" alt="Non-Contact Channeliser — as-built reference — photo 1" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/channelising-system-1.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/channelising-system-2" alt="Non-Contact Channeliser — as-built reference — photo 2" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/channelising-system-2.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/channelising-system-3" alt="Non-Contact Channeliser — as-built reference — photo 3" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/channelising-system-3.*</div>
-          </div>
+      </a>
+      <a class="work-card" href="work/decision-gate.html">
+        <div class="thumb">
+          <img data-base="images/decision-gate-1" alt="Intelligent Decision-Gate Routing — as-built reference" loading="lazy" class="auto-img"/>
+          <div class="placeholder">Image pending<br/>images/decision-gate-1.*</div>
+          <span class="rev-tag">Rev C</span>
         </div>
-          <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
-        </div>
-        <div class="case-block"><span class="k">Problem</span><p>Bulk product formed crystal-like structuring that prevented reliable entry into individual flow channels, causing repeated entry failures.</p></div>
-        <div class="case-block"><span class="k">Approach</span><ul>
-          <li>Iterated multiple prototypes to identify and address the bulk-instability failure mode</li>
-          <li>Engineered a non-contact mechanism that disrupts internal bulk bonding without mechanically disturbing individual products</li>
-          <li>Divided bulk flow into controlled individual lines feeding downstream channels</li>
-        </ul></div>
-        <div class="case-block"><span class="k">Result</span><p>Eliminated entry failures from bulk crystal formation and stabilised flow consistency without compromising product integrity.</p></div>
-      </div>
-    </div>
-
-    <!-- 6 -->
-    <div class="case">
-      <div class="case-body">
-        <div class="case-head">
+        <div class="body">
           <h3>Intelligent Decision-Gate Routing</h3>
-          <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <div class="role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <p class="brief">A simplified, intelligent gating mechanism for multi-way product routing.</p>
+          <span class="cta">View Project &rarr;</span>
         </div>
-        <div class="asbuilt">
-        <div class="gallery">
-          <div class="shot">
-            <img data-base="images/decision-gate-1" alt="Intelligent Decision-Gate Routing — as-built reference — photo 1" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/decision-gate-1.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/decision-gate-2" alt="Intelligent Decision-Gate Routing — as-built reference — photo 2" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/decision-gate-2.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/decision-gate-3" alt="Intelligent Decision-Gate Routing — as-built reference — photo 3" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/decision-gate-3.*</div>
-          </div>
+      </a>
+      <a class="work-card" href="work/distribution-system.html">
+        <div class="thumb">
+          <img data-base="images/distribution-system-1" alt="Fail-Safe Distribution — as-built reference" loading="lazy" class="auto-img"/>
+          <div class="placeholder">Image pending<br/>images/distribution-system-1.*</div>
+          <span class="rev-tag">Rev C</span>
         </div>
-          <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
-        </div>
-        <div class="case-block"><span class="k">Problem</span><p>Product routing logic relied on an over-complex separation mechanism, hurting maintainability and uptime.</p></div>
-        <div class="case-block"><span class="k">Approach</span><ul>
-          <li>Engineered a simplified separation mechanism with integrated mechanical gating logic for intelligent routing</li>
-          <li>Prototyped a further 3-way decision-gate mechanism to extend routing capability</li>
-        </ul></div>
-        <div class="case-block"><span class="k">Result</span><p>Reduced part count and system complexity while improving maintainability, separation accuracy, and operational uptime.</p></div>
-      </div>
-    </div>
-
-    <!-- 7 -->
-    <div class="case">
-      <div class="case-body">
-        <div class="case-head">
+        <div class="body">
           <h3>Fail-Safe Distribution</h3>
-          <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <div class="role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <p class="brief">A fail-safe multi-channel distribution architecture that keeps product flowing through blockages.</p>
+          <span class="cta">View Project &rarr;</span>
         </div>
-        <div class="asbuilt">
-        <div class="gallery">
-          <div class="shot">
-            <img data-base="images/distribution-system-1" alt="Fail-Safe Distribution — as-built reference — photo 1" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/distribution-system-1.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/distribution-system-2" alt="Fail-Safe Distribution — as-built reference — photo 2" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/distribution-system-2.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/distribution-system-3" alt="Fail-Safe Distribution — as-built reference — photo 3" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/distribution-system-3.*</div>
-          </div>
+      </a>
+      <a class="work-card" href="work/cage-system.html">
+        <div class="thumb">
+          <img data-base="images/cage-system-1" alt="Non-Contact Cage &amp; Pooter — as-built reference" loading="lazy" class="auto-img"/>
+          <div class="placeholder">Image pending<br/>images/cage-system-1.*</div>
+          <span class="rev-tag">Rev C</span>
         </div>
-          <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
-        </div>
-        <div class="case-block"><span class="k">Problem</span><p>Single-channel product flow was vulnerable to full-line stoppage from a single blockage.</p></div>
-        <div class="case-block"><span class="k">Approach</span><ul>
-          <li>Redesigned flow by splitting single-channel systems into multiple parallel channels</li>
-          <li>Engineered a fail-safe distribution architecture that keeps product moving through partial blockages</li>
-        </ul></div>
-        <div class="case-block"><span class="k">Result</span><p>Adopted across several production systems, the design keeps product flowing uninterrupted despite partial blockages.</p></div>
-      </div>
-    </div>
-
-    <!-- 8 -->
-    <div class="case">
-      <div class="case-body">
-        <div class="case-head">
+        <div class="body">
           <h3>Non-Contact Cage &amp; Pooter</h3>
-          <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <div class="role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <p class="brief">A non-contact cage-and-pooter system protecting product and the vision line from mechanical damage.</p>
+          <span class="cta">View Project &rarr;</span>
         </div>
-        <div class="asbuilt">
-        <div class="gallery">
-          <div class="shot">
-            <img data-base="images/cage-system-1" alt="Non-Contact Cage & Pooter — as-built reference — photo 1" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/cage-system-1.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/cage-system-2" alt="Non-Contact Cage & Pooter — as-built reference — photo 2" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/cage-system-2.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/cage-system-3" alt="Non-Contact Cage & Pooter — as-built reference — photo 3" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/cage-system-3.*</div>
-          </div>
+      </a>
+      <a class="work-card" href="work/arm-rehab.html">
+        <div class="thumb">
+          <img data-base="images/arm-rehab-1" alt="Low-Cost Arm Rehabilitation Device — as-built reference" loading="lazy" class="auto-img"/>
+          <div class="placeholder">Image pending<br/>images/arm-rehab-1.*</div>
+          <span class="rev-tag">Rev B</span>
         </div>
-          <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
-        </div>
-        <div class="case-block"><span class="k">Problem</span><p>Exposed mechanical handling caused product damage and generated debris that blocked the downstream vision system.</p></div>
-        <div class="case-block"><span class="k">Approach</span><ul>
-          <li>Engineered an induced-air pooter for gentle, non-contact product handling</li>
-          <li>Designed a protective cage architecture to prevent product escape and exposure to moving parts</li>
-          <li>Optimised airflow parameters by calculation for controlled, safe, and efficient return transport</li>
-        </ul></div>
-        <div class="case-block"><span class="k">Result</span><p>Eliminated contact-related product damage and vision-system blockages while improving handling reliability and system cleanliness.</p></div>
-      </div>
-    </div>
-
-    <!-- 9 -->
-    <div class="case">
-      <div class="case-body">
-        <div class="case-head">
+        <div class="body">
           <h3>Low-Cost Arm Rehabilitation Device</h3>
-          <div class="case-role">Founder — Botlab Technologies</div>
+          <div class="role">Founder — Botlab Technologies</div>
+          <p class="brief">A low-cost robotic arm rehabilitation device built and clinically trialed from the ground up.</p>
+          <span class="cta">View Project &rarr;</span>
         </div>
-        <div class="asbuilt">
-        <div class="gallery">
-          <div class="shot">
-            <img data-base="images/arm-rehab-1" alt="Low-Cost Arm Rehabilitation Device — as-built reference — photo 1" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/arm-rehab-1.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/arm-rehab-2" alt="Low-Cost Arm Rehabilitation Device — as-built reference — photo 2" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/arm-rehab-2.*</div>
-          </div>
-          <div class="shot">
-            <img data-base="images/arm-rehab-3" alt="Low-Cost Arm Rehabilitation Device — as-built reference — photo 3" loading="lazy" class="auto-img"/>
-            <div class="placeholder">Drop image at<br/>images/arm-rehab-3.*</div>
-          </div>
-        </div>
-          <div class="cap"><span>As-built</span><span class="rev">Rev B</span></div>
-        </div>
-        <div class="case-block"><span class="k">Problem</span><p>Assisted arm rehabilitation hardware on the market was cost-prohibitive for wider clinical and home use.</p></div>
-        <div class="case-block"><span class="k">Approach</span><ul>
-          <li>Conceptualised the mechanical assistive architecture and designed the structural frame and joint mechanisms</li>
-          <li>Fabricated a functional metal prototype, applying ISO 13485 QMS methodology and FEA (ANSYS) for structural validation</li>
-          <li>Ran physiotherapist-supervised trials, iterating the design against patient feedback</li>
-        </ul></div>
-        <div class="case-block"><span class="k">Result</span><p>Delivered a working rehabilitation device roughly 60% more affordable than comparable market solutions, validated through supervised patient trials.</p></div>
-      </div>
+      </a>
     </div>
 
   </div>
@@ -782,26 +344,6 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
   &copy; <span id="year"></span> Gokulnath Chandrasekharan. Built with care, not Canva.
 </footer>
 
-<script>
-document.getElementById('year').textContent = new Date().getFullYear();
-
-// Try each image slot against several extensions, so any format
-// (png, jpg, jpeg, webp) works without renaming the source file.
-const IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'webp', 'JPG', 'JPEG', 'PNG'];
-document.querySelectorAll('img.auto-img').forEach((img) => {
-  const base = img.dataset.base;
-  let i = 0;
-  const tryNext = () => {
-    if (i >= IMAGE_EXTENSIONS.length) {
-      img.classList.add('broken');
-      return;
-    }
-    img.src = `${base}.${IMAGE_EXTENSIONS[i]}`;
-    i += 1;
-  };
-  img.addEventListener('error', tryNext);
-  tryNext();
-});
-</script>
+<script src="assets/site.js"></script>
 </body>
 </html>
