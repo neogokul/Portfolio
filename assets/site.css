@@ -270,7 +270,7 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
 }
 .revlog td.period{font-family:'IBM Plex Mono',monospace;color:var(--muted);white-space:nowrap;width:150px;}
 .revlog td.role{color:var(--text);font-weight:500;}
-.revlog td.org{color:var(--muted);font-size:0.82rem;display:block;margin-top:2px;}
+.revlog td .org{color:var(--muted);font-size:0.82rem;display:block;margin-top:4px;}
 .revlog td.desc{color:var(--muted);}
 .revlog tr:last-child td{border-bottom:none;}
 
