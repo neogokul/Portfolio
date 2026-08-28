@@ -147,7 +147,7 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
 
 /* ---------- WORK / CASE STUDIES ---------- */
 .case{
-  display:grid;grid-template-columns:340px 1fr;gap:40px;
+  display:grid;grid-template-columns:380px 1fr;gap:40px;
   padding:40px 0;border-bottom:1px solid var(--border);
 }
 .case:last-child{border-bottom:none;padding-bottom:0;}
@@ -159,15 +159,20 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
   border:1px solid var(--border);background:var(--surface);border-radius:6px;
   overflow:hidden;position:relative;align-self:start;
 }
-.asbuilt .frame{
-  aspect-ratio:4/3;width:100%;background:var(--surface2);
+.asbuilt .gallery{
+  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;
+  background:var(--border);
+}
+.asbuilt .gallery .shot:first-child{grid-column:1/3;}
+.asbuilt .shot{
+  aspect-ratio:4/3;background:var(--surface2);
   display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
 }
 .asbuilt img{width:100%;height:100%;object-fit:cover;display:block;}
-.asbuilt .frame .placeholder{
-  display:none;flex-direction:column;align-items:center;justify-content:center;gap:8px;
-  color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:0.68rem;letter-spacing:0.04em;
-  text-align:center;padding:16px;text-transform:uppercase;
+.asbuilt .shot .placeholder{
+  display:none;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:0.62rem;letter-spacing:0.03em;
+  text-align:center;padding:10px;text-transform:uppercase;line-height:1.5;
 }
 .asbuilt img.broken{display:none;}
 .asbuilt img.broken + .placeholder{display:flex;}
@@ -389,9 +394,19 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
     <!-- 1 -->
     <div class="case">
       <div class="asbuilt">
-        <div class="frame">
-          <img src="images/sorting-system.png" alt="Automated Sorting & Handling Line — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
-          <div class="placeholder">As-built image pending<br/>images/sorting-system.png</div>
+        <div class="gallery">
+          <div class="shot">
+            <img src="images/sorting-system-1.png" alt="Automated Sorting & Handling Line — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/sorting-system-1.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/sorting-system-2.png" alt="Automated Sorting & Handling Line — as-built reference — photo 2" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/sorting-system-2.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/sorting-system-3.png" alt="Automated Sorting & Handling Line — as-built reference — photo 3" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/sorting-system-3.png</div>
+          </div>
         </div>
         <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
       </div>
@@ -411,9 +426,19 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
     <!-- 2 -->
     <div class="case">
       <div class="asbuilt">
-        <div class="frame">
-          <img src="images/hibernation-tunnel.png" alt="Cold-Tunnel Hibernation Sorter — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
-          <div class="placeholder">As-built image pending<br/>images/hibernation-tunnel.png</div>
+        <div class="gallery">
+          <div class="shot">
+            <img src="images/hibernation-tunnel-1.png" alt="Cold-Tunnel Hibernation Sorter — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/hibernation-tunnel-1.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/hibernation-tunnel-2.png" alt="Cold-Tunnel Hibernation Sorter — as-built reference — photo 2" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/hibernation-tunnel-2.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/hibernation-tunnel-3.png" alt="Cold-Tunnel Hibernation Sorter — as-built reference — photo 3" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/hibernation-tunnel-3.png</div>
+          </div>
         </div>
         <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
       </div>
@@ -433,9 +458,19 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
     <!-- 3 -->
     <div class="case">
       <div class="asbuilt">
-        <div class="frame">
-          <img src="images/loader-system.png" alt="AI-Guided Trolley Loader — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
-          <div class="placeholder">As-built image pending<br/>images/loader-system.png</div>
+        <div class="gallery">
+          <div class="shot">
+            <img src="images/loader-system-1.png" alt="AI-Guided Trolley Loader — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/loader-system-1.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/loader-system-2.png" alt="AI-Guided Trolley Loader — as-built reference — photo 2" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/loader-system-2.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/loader-system-3.png" alt="AI-Guided Trolley Loader — as-built reference — photo 3" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/loader-system-3.png</div>
+          </div>
         </div>
         <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
       </div>
@@ -455,9 +490,19 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
     <!-- 4 -->
     <div class="case">
       <div class="asbuilt">
-        <div class="frame">
-          <img src="images/inversion-separation.png" alt="Single-Actuator Inversion & Separation — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
-          <div class="placeholder">As-built image pending<br/>images/inversion-separation.png</div>
+        <div class="gallery">
+          <div class="shot">
+            <img src="images/inversion-separation-1.png" alt="Single-Actuator Inversion & Separation — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/inversion-separation-1.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/inversion-separation-2.png" alt="Single-Actuator Inversion & Separation — as-built reference — photo 2" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/inversion-separation-2.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/inversion-separation-3.png" alt="Single-Actuator Inversion & Separation — as-built reference — photo 3" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/inversion-separation-3.png</div>
+          </div>
         </div>
         <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
       </div>
@@ -477,9 +522,19 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
     <!-- 5 -->
     <div class="case">
       <div class="asbuilt">
-        <div class="frame">
-          <img src="images/channelising-system.png" alt="Non-Contact Channeliser — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
-          <div class="placeholder">As-built image pending<br/>images/channelising-system.png</div>
+        <div class="gallery">
+          <div class="shot">
+            <img src="images/channelising-system-1.png" alt="Non-Contact Channeliser — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/channelising-system-1.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/channelising-system-2.png" alt="Non-Contact Channeliser — as-built reference — photo 2" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/channelising-system-2.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/channelising-system-3.png" alt="Non-Contact Channeliser — as-built reference — photo 3" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/channelising-system-3.png</div>
+          </div>
         </div>
         <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
       </div>
@@ -499,9 +554,19 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
     <!-- 6 -->
     <div class="case">
       <div class="asbuilt">
-        <div class="frame">
-          <img src="images/decision-gate.png" alt="Intelligent Decision-Gate Routing — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
-          <div class="placeholder">As-built image pending<br/>images/decision-gate.png</div>
+        <div class="gallery">
+          <div class="shot">
+            <img src="images/decision-gate-1.png" alt="Intelligent Decision-Gate Routing — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/decision-gate-1.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/decision-gate-2.png" alt="Intelligent Decision-Gate Routing — as-built reference — photo 2" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/decision-gate-2.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/decision-gate-3.png" alt="Intelligent Decision-Gate Routing — as-built reference — photo 3" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/decision-gate-3.png</div>
+          </div>
         </div>
         <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
       </div>
@@ -520,9 +585,19 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
     <!-- 7 -->
     <div class="case">
       <div class="asbuilt">
-        <div class="frame">
-          <img src="images/distribution-system.png" alt="Fail-Safe Distribution — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
-          <div class="placeholder">As-built image pending<br/>images/distribution-system.png</div>
+        <div class="gallery">
+          <div class="shot">
+            <img src="images/distribution-system-1.png" alt="Fail-Safe Distribution — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/distribution-system-1.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/distribution-system-2.png" alt="Fail-Safe Distribution — as-built reference — photo 2" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/distribution-system-2.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/distribution-system-3.png" alt="Fail-Safe Distribution — as-built reference — photo 3" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/distribution-system-3.png</div>
+          </div>
         </div>
         <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
       </div>
@@ -541,9 +616,19 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
     <!-- 8 -->
     <div class="case">
       <div class="asbuilt">
-        <div class="frame">
-          <img src="images/cage-system.png" alt="Non-Contact Cage & Pooter — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
-          <div class="placeholder">As-built image pending<br/>images/cage-system.png</div>
+        <div class="gallery">
+          <div class="shot">
+            <img src="images/cage-system-1.png" alt="Non-Contact Cage & Pooter — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/cage-system-1.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/cage-system-2.png" alt="Non-Contact Cage & Pooter — as-built reference — photo 2" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/cage-system-2.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/cage-system-3.png" alt="Non-Contact Cage & Pooter — as-built reference — photo 3" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/cage-system-3.png</div>
+          </div>
         </div>
         <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
       </div>
@@ -563,9 +648,19 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
     <!-- 9 -->
     <div class="case">
       <div class="asbuilt">
-        <div class="frame">
-          <img src="images/arm-rehab.png" alt="Low-Cost Arm Rehabilitation Device — as-built reference" loading="lazy" onerror="this.classList.add('broken')"/>
-          <div class="placeholder">As-built image pending<br/>images/arm-rehab.png</div>
+        <div class="gallery">
+          <div class="shot">
+            <img src="images/arm-rehab-1.png" alt="Low-Cost Arm Rehabilitation Device — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/arm-rehab-1.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/arm-rehab-2.png" alt="Low-Cost Arm Rehabilitation Device — as-built reference — photo 2" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/arm-rehab-2.png</div>
+          </div>
+          <div class="shot">
+            <img src="images/arm-rehab-3.png" alt="Low-Cost Arm Rehabilitation Device — as-built reference — photo 3" loading="lazy" onerror="this.classList.add('broken')"/>
+            <div class="placeholder">Drop image at<br/>images/arm-rehab-3.png</div>
+          </div>
         </div>
         <div class="cap"><span>As-built</span><span class="rev">Rev B</span></div>
       </div>
