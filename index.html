@@ -125,6 +125,21 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
 .sec-head h2{font-size:clamp(1.6rem,3.4vw,2.3rem);margin-bottom:12px;}
 .sec-head p{color:var(--muted);}
 
+.notice-plate{
+  display:flex;gap:12px;align-items:flex-start;
+  margin-top:20px;padding:14px 18px;max-width:70ch;
+  background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--orange);
+  border-radius:4px;
+}
+.notice-plate .notice-icon{
+  font-family:'IBM Plex Mono',monospace;font-size:0.68rem;font-weight:600;letter-spacing:0.06em;
+  color:var(--orange);white-space:nowrap;padding-top:1px;
+}
+.notice-plate p{
+  font-family:'IBM Plex Mono',monospace;font-size:0.74rem;line-height:1.7;
+  color:var(--muted);letter-spacing:0.01em;
+}
+
 /* ---------- ABOUT ---------- */
 #about p.lead{font-size:1.05rem;color:var(--text);max-width:74ch;margin-bottom:28px;}
 .about-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 32px;max-width:900px;}
@@ -388,6 +403,10 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
       <div class="eyebrow">04 / Work</div>
       <h2>Case Studies</h2>
       <p>Nine mechanical subsystems engineered for production automation environments. Reference plates show the as-built system; write-ups below cover the engineering problem, approach, and result.</p>
+      <div class="notice-plate">
+        <span class="notice-icon">NOTICE</span>
+        <p>As-built reference images have been digitally re-rendered from original CAD and site documentation. Proprietary geometry, part numbering, and client-identifying detail have been altered or omitted in accordance with employer non-disclosure and confidentiality obligations. Renderings are illustrative only and are not to be used for engineering reference.</p>
+      </div>
     </div>
 
     <!-- 1 -->
