@@ -147,23 +147,22 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
 
 /* ---------- WORK / CASE STUDIES ---------- */
 .case{
-  display:grid;grid-template-columns:380px 1fr;gap:40px;
   padding:40px 0;border-bottom:1px solid var(--border);
 }
 .case:last-child{border-bottom:none;padding-bottom:0;}
 .case:first-child{padding-top:0;}
-@media (max-width:760px){
-  .case{grid-template-columns:1fr;gap:20px;}
-}
+.case-head{margin-bottom:20px;}
 .asbuilt{
   border:1px solid var(--border);background:var(--surface);border-radius:6px;
-  overflow:hidden;position:relative;align-self:start;
+  overflow:hidden;position:relative;margin-bottom:24px;
 }
 .asbuilt .gallery{
-  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
   background:var(--border);
 }
-.asbuilt .gallery .shot:first-child{grid-column:1/3;}
+@media (max-width:640px){
+  .asbuilt .gallery{grid-template-columns:1fr;}
+}
 .asbuilt .shot{
   aspect-ratio:4/3;background:var(--surface2);
   display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
@@ -393,7 +392,12 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
 
     <!-- 1 -->
     <div class="case">
-      <div class="asbuilt">
+      <div class="case-body">
+        <div class="case-head">
+          <h3>Automated Sorting &amp; Handling Line</h3>
+          <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+        </div>
+        <div class="asbuilt">
         <div class="gallery">
           <div class="shot">
             <img src="images/sorting-system-1.png" alt="Automated Sorting & Handling Line — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
@@ -408,11 +412,8 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
             <div class="placeholder">Drop image at<br/>images/sorting-system-3.png</div>
           </div>
         </div>
-        <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
-      </div>
-      <div class="case-body">
-        <h3>Automated Sorting &amp; Handling Line</h3>
-        <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
+        </div>
         <div class="case-block"><span class="k">Problem</span><p>A hygienic insect-rearing production line needed a fully automated sorting architecture capable of high throughput with minimal manual intervention.</p></div>
         <div class="case-block"><span class="k">Approach</span><ul>
           <li>Led concept development, feasibility evaluation, and mechanical architecture definition</li>
@@ -425,7 +426,12 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
 
     <!-- 2 -->
     <div class="case">
-      <div class="asbuilt">
+      <div class="case-body">
+        <div class="case-head">
+          <h3>Cold-Tunnel Hibernation Sorter</h3>
+          <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+        </div>
+        <div class="asbuilt">
         <div class="gallery">
           <div class="shot">
             <img src="images/hibernation-tunnel-1.png" alt="Cold-Tunnel Hibernation Sorter — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
@@ -440,11 +446,8 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
             <div class="placeholder">Drop image at<br/>images/hibernation-tunnel-3.png</div>
           </div>
         </div>
-        <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
-      </div>
-      <div class="case-body">
-        <h3>Cold-Tunnel Hibernation Sorter</h3>
-        <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
+        </div>
         <div class="case-block"><span class="k">Problem</span><p>Downstream handling and quality checks required product to be temporarily and safely hibernated via controlled cooling, without breaching biosecurity or uniformity requirements.</p></div>
         <div class="case-block"><span class="k">Approach</span><ul>
           <li>Engineered a multi-fan forced-convection cooling system for uniform airflow and thermal gradients across the tunnel</li>
@@ -457,7 +460,12 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
 
     <!-- 3 -->
     <div class="case">
-      <div class="asbuilt">
+      <div class="case-body">
+        <div class="case-head">
+          <h3>AI-Guided Trolley Loader</h3>
+          <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+        </div>
+        <div class="asbuilt">
         <div class="gallery">
           <div class="shot">
             <img src="images/loader-system-1.png" alt="AI-Guided Trolley Loader — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
@@ -472,11 +480,8 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
             <div class="placeholder">Drop image at<br/>images/loader-system-3.png</div>
           </div>
         </div>
-        <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
-      </div>
-      <div class="case-body">
-        <h3>AI-Guided Trolley Loader</h3>
-        <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
+        </div>
         <div class="case-block"><span class="k">Problem</span><p>Manual trolley loading across 63 trays was labour-intensive and inconsistent, limiting throughput and scalability.</p></div>
         <div class="case-block"><span class="k">Approach</span><ul>
           <li>Designed a multi-channel channeliser and belt-driven shuttle conveyor for precise tray positioning</li>
@@ -489,7 +494,12 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
 
     <!-- 4 -->
     <div class="case">
-      <div class="asbuilt">
+      <div class="case-body">
+        <div class="case-head">
+          <h3>Single-Actuator Inversion &amp; Separation</h3>
+          <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+        </div>
+        <div class="asbuilt">
         <div class="gallery">
           <div class="shot">
             <img src="images/inversion-separation-1.png" alt="Single-Actuator Inversion & Separation — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
@@ -504,11 +514,8 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
             <div class="placeholder">Drop image at<br/>images/inversion-separation-3.png</div>
           </div>
         </div>
-        <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
-      </div>
-      <div class="case-body">
-        <h3>Single-Actuator Inversion &amp; Separation</h3>
-        <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
+        </div>
         <div class="case-block"><span class="k">Problem</span><p>Downstream processing needed capsule inversion and product separation, but separate actuation stages added cost and mechanical complexity.</p></div>
         <div class="case-block"><span class="k">Approach</span><ul>
           <li>Defined a precision tolerancing strategy for synchronised inversion and separation</li>
@@ -521,7 +528,12 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
 
     <!-- 5 -->
     <div class="case">
-      <div class="asbuilt">
+      <div class="case-body">
+        <div class="case-head">
+          <h3>Non-Contact Channeliser</h3>
+          <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+        </div>
+        <div class="asbuilt">
         <div class="gallery">
           <div class="shot">
             <img src="images/channelising-system-1.png" alt="Non-Contact Channeliser — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
@@ -536,11 +548,8 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
             <div class="placeholder">Drop image at<br/>images/channelising-system-3.png</div>
           </div>
         </div>
-        <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
-      </div>
-      <div class="case-body">
-        <h3>Non-Contact Channeliser</h3>
-        <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
+        </div>
         <div class="case-block"><span class="k">Problem</span><p>Bulk product formed crystal-like structuring that prevented reliable entry into individual flow channels, causing repeated entry failures.</p></div>
         <div class="case-block"><span class="k">Approach</span><ul>
           <li>Iterated multiple prototypes to identify and address the bulk-instability failure mode</li>
@@ -553,7 +562,12 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
 
     <!-- 6 -->
     <div class="case">
-      <div class="asbuilt">
+      <div class="case-body">
+        <div class="case-head">
+          <h3>Intelligent Decision-Gate Routing</h3>
+          <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+        </div>
+        <div class="asbuilt">
         <div class="gallery">
           <div class="shot">
             <img src="images/decision-gate-1.png" alt="Intelligent Decision-Gate Routing — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
@@ -568,11 +582,8 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
             <div class="placeholder">Drop image at<br/>images/decision-gate-3.png</div>
           </div>
         </div>
-        <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
-      </div>
-      <div class="case-body">
-        <h3>Intelligent Decision-Gate Routing</h3>
-        <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
+        </div>
         <div class="case-block"><span class="k">Problem</span><p>Product routing logic relied on an over-complex separation mechanism, hurting maintainability and uptime.</p></div>
         <div class="case-block"><span class="k">Approach</span><ul>
           <li>Engineered a simplified separation mechanism with integrated mechanical gating logic for intelligent routing</li>
@@ -584,7 +595,12 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
 
     <!-- 7 -->
     <div class="case">
-      <div class="asbuilt">
+      <div class="case-body">
+        <div class="case-head">
+          <h3>Fail-Safe Distribution</h3>
+          <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+        </div>
+        <div class="asbuilt">
         <div class="gallery">
           <div class="shot">
             <img src="images/distribution-system-1.png" alt="Fail-Safe Distribution — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
@@ -599,11 +615,8 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
             <div class="placeholder">Drop image at<br/>images/distribution-system-3.png</div>
           </div>
         </div>
-        <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
-      </div>
-      <div class="case-body">
-        <h3>Fail-Safe Distribution</h3>
-        <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
+        </div>
         <div class="case-block"><span class="k">Problem</span><p>Single-channel product flow was vulnerable to full-line stoppage from a single blockage.</p></div>
         <div class="case-block"><span class="k">Approach</span><ul>
           <li>Redesigned flow by splitting single-channel systems into multiple parallel channels</li>
@@ -615,7 +628,12 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
 
     <!-- 8 -->
     <div class="case">
-      <div class="asbuilt">
+      <div class="case-body">
+        <div class="case-head">
+          <h3>Non-Contact Cage &amp; Pooter</h3>
+          <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+        </div>
+        <div class="asbuilt">
         <div class="gallery">
           <div class="shot">
             <img src="images/cage-system-1.png" alt="Non-Contact Cage & Pooter — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
@@ -630,11 +648,8 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
             <div class="placeholder">Drop image at<br/>images/cage-system-3.png</div>
           </div>
         </div>
-        <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
-      </div>
-      <div class="case-body">
-        <h3>Non-Contact Cage &amp; Pooter</h3>
-        <div class="case-role">Lead Mechatronics Engineer · BigSis (Zyzzle Ltd), UK</div>
+          <div class="cap"><span>As-built</span><span class="rev">Rev C</span></div>
+        </div>
         <div class="case-block"><span class="k">Problem</span><p>Exposed mechanical handling caused product damage and generated debris that blocked the downstream vision system.</p></div>
         <div class="case-block"><span class="k">Approach</span><ul>
           <li>Engineered an induced-air pooter for gentle, non-contact product handling</li>
@@ -647,7 +662,12 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
 
     <!-- 9 -->
     <div class="case">
-      <div class="asbuilt">
+      <div class="case-body">
+        <div class="case-head">
+          <h3>Low-Cost Arm Rehabilitation Device</h3>
+          <div class="case-role">Founder — Botlab Technologies</div>
+        </div>
+        <div class="asbuilt">
         <div class="gallery">
           <div class="shot">
             <img src="images/arm-rehab-1.png" alt="Low-Cost Arm Rehabilitation Device — as-built reference — photo 1" loading="lazy" onerror="this.classList.add('broken')"/>
@@ -662,11 +682,8 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-family:'IBM Plex
             <div class="placeholder">Drop image at<br/>images/arm-rehab-3.png</div>
           </div>
         </div>
-        <div class="cap"><span>As-built</span><span class="rev">Rev B</span></div>
-      </div>
-      <div class="case-body">
-        <h3>Low-Cost Arm Rehabilitation Device</h3>
-        <div class="case-role">Founder — Botlab Technologies</div>
+          <div class="cap"><span>As-built</span><span class="rev">Rev B</span></div>
+        </div>
         <div class="case-block"><span class="k">Problem</span><p>Assisted arm rehabilitation hardware on the market was cost-prohibitive for wider clinical and home use.</p></div>
         <div class="case-block"><span class="k">Approach</span><ul>
           <li>Conceptualised the mechanical assistive architecture and designed the structural frame and joint mechanisms</li>
