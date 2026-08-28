@@ -18,13 +18,17 @@ expected base filename until you add the file.
 | Fail-Safe Distribution | `distribution-system-1`, `distribution-system-2`, `distribution-system-3` |
 | Non-Contact Cage & Pooter | `cage-system-1`, `cage-system-2`, `cage-system-3` |
 | Low-Cost Arm Rehabilitation Device | `arm-rehab-1`, `arm-rehab-2`, `arm-rehab-3` |
+| Aphid Monitoring Device | `aphid-monitor-1`, `aphid-monitor-2`, `aphid-monitor-3` |
+| Anti-Hail Net Device | `anti-hail-net-1`, `anti-hail-net-2`, `anti-hail-net-3` |
 
 **Example:** for the first slot of "Automated Sorting & Handling Line", any of
 `images/sorting-system-1.png`, `images/sorting-system-1.jpg`, or
 `images/sorting-system-1.jpeg` will show up — no code change needed.
 
 **Notes**
-- Slot `-1` renders large (top), slots `-2` and `-3` render side by side below it.
+- Slot `-1` is used as the homepage card thumbnail and as the default large image
+  on that project's detail page (`work/<slug>.html`); slots `-2` and `-3` appear as
+  thumbnails in the detail page's viewer rail — click one to swap the large image.
 - You don't need all 3 per project — any missing slot just stays a labelled placeholder.
 - If a base name matches more than one file extension (e.g. both `.png` and
   `.jpg` exist for the same slot), the page uses `.png` first, then `.jpg`,
