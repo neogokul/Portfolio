@@ -141,7 +141,7 @@ document.querySelectorAll('.thumb[data-slug]').forEach(async (thumb) => {
   if (!firstUrl) {
     const empty = document.createElement('div');
     empty.className = 'thumb-empty';
-    empty.textContent = 'Photos coming soon';
+    empty.innerHTML = 'Currently Under R&amp;D<br>No Photos Available';
     thumb.prepend(empty);
     return;
   }
@@ -168,7 +168,7 @@ document.querySelectorAll('.viewer[data-slug]').forEach(async (viewer) => {
     frame.innerHTML = '';
     const empty = document.createElement('div');
     empty.className = 'viewer-empty';
-    empty.textContent = 'Photos coming soon for this project.';
+    empty.innerHTML = 'Currently Under R&amp;D<br>No Photos Available';
     frame.appendChild(empty);
     if (cap) cap.remove();
     if (thumbsWrap) thumbsWrap.remove();

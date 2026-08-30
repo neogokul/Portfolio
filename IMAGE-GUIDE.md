@@ -4,8 +4,8 @@ The site automatically detects whatever images actually exist in `images/` for
 each project — you don't need to pre-declare a fixed number per project. Drop
 in 1 photo, 10 photos, or none at all, and the page adapts:
 
-- **0 images** → the project card and detail page show "Photos coming soon"
-  instead of an empty box.
+- **0 images** → the project card and detail page show "Currently Under R&D —
+  No Photos Available" instead of an empty box.
 - **1 image** → shows just the large image, no thumbnail rail.
 - **2+ images** → shows the first as the main image, with a thumbnail rail
   underneath to switch between the rest.
@@ -80,6 +80,6 @@ listing from GitHub's API, so a bracket-text rename takes effect the moment
 you save it on GitHub — no code change, ever. The one caveat: GitHub's public
 API allows 60 such requests per hour per visitor IP address; for normal
 portfolio traffic this is a non-issue, but if it's ever exceeded, this
-project's photos temporarily show "Photos coming soon" until the hour resets,
+project's photos temporarily show "Currently Under R&D — No Photos Available" until the hour resets,
 rather than an error. Every other project is unaffected since they don't use
 this lookup.
