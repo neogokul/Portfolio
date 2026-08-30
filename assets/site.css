@@ -201,7 +201,7 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
   aspect-ratio:4/3;width:100%;background:var(--surface2);border:1px solid var(--border);
   border-radius:6px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;
 }
-.viewer-frame img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .25s ease;}
+.viewer-frame img{width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .25s ease;}
 .viewer-frame img.is-loaded{opacity:1;}
 .viewer-frame .viewer-empty{
   color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.04em;
