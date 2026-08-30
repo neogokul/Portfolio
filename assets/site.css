@@ -198,12 +198,13 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
 .viewer{position:sticky;top:88px;}
 @media (max-width:900px){.viewer{position:static;}}
 .viewer-frame{
-  aspect-ratio:4/3;width:100%;background:var(--surface2);border:1px solid var(--border);
+  height:440px;max-width:100%;background:var(--surface2);border:1px solid var(--border);
   border-radius:6px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;
-  transition:aspect-ratio .2s ease;
+  margin:0 auto;
 }
+@media (max-width:600px){.viewer-frame{height:300px;}}
 .viewer-frame .viewer-main{
-  width:100%;height:100%;object-fit:contain;display:block;
+  width:auto;height:100%;max-width:100%;object-fit:contain;display:block;
   opacity:0;transition:opacity .25s ease;
 }
 .viewer-frame .viewer-main.is-loaded{opacity:1;}

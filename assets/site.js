@@ -178,11 +178,6 @@ document.querySelectorAll('.viewer[data-slug]').forEach(async (viewer) => {
   const mainImg = document.createElement('img');
   mainImg.className = 'viewer-main is-loaded';
   mainImg.alt = viewer.dataset.alt || '';
-  mainImg.onload = () => {
-    if (mainImg.naturalWidth && mainImg.naturalHeight) {
-      frame.style.aspectRatio = `${mainImg.naturalWidth} / ${mainImg.naturalHeight}`;
-    }
-  };
 
   frame.innerHTML = '';
   frame.appendChild(mainImg);
