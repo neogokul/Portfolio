@@ -175,25 +175,22 @@ document.querySelectorAll('.viewer[data-slug]').forEach(async (viewer) => {
     return;
   }
 
-  const bgImg = document.createElement('img');
-  bgImg.className = 'viewer-bg is-loaded';
-  bgImg.alt = '';
-  bgImg.setAttribute('aria-hidden', 'true');
-
   const mainImg = document.createElement('img');
   mainImg.className = 'viewer-main is-loaded';
   mainImg.alt = viewer.dataset.alt || '';
+  mainImg.onload = () => {
+    if (mainImg.naturalWidth && mainImg.naturalHeight) {
+      frame.style.aspectRatio = `${mainImg.naturalWidth} / ${mainImg.naturalHeight}`;
+    }
+  };
 
   frame.innerHTML = '';
-  frame.appendChild(bgImg);
   frame.appendChild(mainImg);
 
-  bgImg.src = groups[0].items[0].url;
   mainImg.src = groups[0].items[0].url;
   if (capVersion) capVersion.textContent = groups[0].label;
 
   function selectThumb(btn, url, label) {
-    bgImg.src = url;
     mainImg.src = url;
     thumbsWrap.querySelectorAll('button').forEach((b) => b.classList.remove('active'));
     btn.classList.add('active');
