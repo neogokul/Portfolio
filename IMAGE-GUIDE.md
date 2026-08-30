@@ -38,18 +38,39 @@ page will show both, in that order, even though slot `-3` doesn't exist.
 
 ### Cold-Tunnel Hibernation Sorter (special case)
 
-This project uses a fixed, explicit set of 5 filenames instead of the generic
-numbering, because its images are versioned:
+This project reads its caption text straight out of the filename, so you can
+rename these on GitHub whenever you like **without asking me to update the
+code**. Name files:
 
 ```
-hibernation-tunnelv3-1   (shown 1st, labelled "Version 3")
-hibernation-tunnelv2-2   (shown 2nd, labelled "Version 2")
-hibernation-tunnelv1-3   (shown 3rd, labelled "Version 1")
-hibernation-tunnelv1-4   (shown 4th, labelled "Version 1")
-hibernation-tunnelv3-5   (shown 5th, labelled "Version 3")
+hibernation-tunnelv-<order>(<label you want shown>).<ext>
 ```
 
-Display order follows the trailing `-<order>` number only, regardless of
-version — any of these can be missing and the rest still show correctly. If
-you need to add or change which files exist for this project beyond these 5,
-tell me and I'll update the list in `assets/site.js`.
+- `<order>` controls display position (1, 2, 3, …) — purely a sort key, not
+  shown anywhere.
+- `<label you want shown>` — whatever text you put in the parentheses is
+  displayed verbatim as that photo's caption/thumbnail label (e.g. "Version 3",
+  "Prototype Version 1", anything).
+- `<ext>` must be `png`, `jpg`, `jpeg`, or `webp` — **not `.HEIC`**, which
+  iPhones save by default but browsers cannot display at all. Convert HEIC
+  photos to JPG before uploading (iPhone: Settings → Camera → Formats → "Most
+  Compatible" before taking new photos, or use any online HEIC→JPG converter
+  for existing ones).
+
+Current files:
+```
+hibernation-tunnelv-1(Version 3).jpg
+hibernation-tunnelv-2(Version 2).jpg
+hibernation-tunnelv-3(Version 1).jpg
+hibernation-tunnelv-4(Version 1).jpg   ⚠ currently an empty/corrupted file — re-upload
+hibernation-tunnelv-5(Version 3).jpg   ⚠ currently an empty/corrupted file — re-upload
+hibernation-tunnelv-6(Version 1).HEIC  ⚠ HEIC — won't display, convert to .jpg
+```
+
+**How this works technically:** the page fetches the live file listing from
+GitHub's API and reads it directly, so any rename takes effect the moment you
+save it on GitHub — no code change, ever. The one caveat: GitHub's public API
+allows 60 such requests per hour per visitor IP address; for normal portfolio
+traffic this is a non-issue, but if it's ever exceeded, this project's photos
+temporarily show "Photos coming soon" until the hour resets, rather than an
+error. Every other project is unaffected since they don't use this lookup.

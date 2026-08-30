@@ -3,32 +3,52 @@ const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 // ---------------------------------------------------------------------
-// Dynamic image loading: probes the images/ folder for whatever files
-// actually exist (in any of a few formats) instead of assuming a fixed
-// number of slots per project. A project can have 0, 1, or many photos
-// and the page adapts — no empty placeholder boxes for missing slots.
+// Dynamic image loading: for most projects, probes images/ for whatever
+// <slug>-<n> files actually exist. A few projects instead read the
+// images/ folder directly from GitHub and pull their display label out
+// of a "(...)" suffix in the filename, so renaming a file's bracketed
+// text on GitHub is all that's needed to change its caption — no code
+// change required.
 // ---------------------------------------------------------------------
 
 const IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'webp'];
 const MAX_NUMBERED_SLOTS = 15;
+const GITHUB_REPO = 'neogokul/Portfolio';
 
-// Projects whose image files don't follow the plain <slug>-<n> numbering
-// get an explicit candidate list here, in display order.
-const CUSTOM_CANDIDATES = {
-  'hibernation-tunnel': [
-    { base: 'hibernation-tunnelv3-1', label: 'Version 3' },
-    { base: 'hibernation-tunnelv2-2', label: 'Version 2' },
-    { base: 'hibernation-tunnelv1-3', label: 'Version 1' },
-    { base: 'hibernation-tunnelv1-4', label: 'Version 1' },
-    { base: 'hibernation-tunnelv3-5', label: 'Version 3' },
-  ],
-};
+// Projects whose files are named "<slug>v-<order>(<label>).<ext>" — order
+// controls display position, whatever is inside the parentheses is shown
+// as the caption/thumbnail label, read live from GitHub on each page load.
+const BRACKET_LABEL_SLUGS = new Set(['hibernation-tunnel']);
+
+let directoryListingPromise = null;
+function fetchImagesDirectoryListing() {
+  if (!directoryListingPromise) {
+    directoryListingPromise = fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/images`)
+      .then((res) => (res.ok ? res.json() : []))
+      .catch(() => []);
+  }
+  return directoryListingPromise;
+}
+
+async function bracketLabelCandidates(slug, prefix) {
+  const files = await fetchImagesDirectoryListing();
+  const pattern = new RegExp(`^${slug}v-(\\d+)\\((.+)\\)\\.(png|jpe?g|webp)$`, 'i');
+  const matches = [];
+  files.forEach((f) => {
+    const m = f.name && f.name.match(pattern);
+    if (m) {
+      matches.push({
+        order: parseInt(m[1], 10),
+        label: m[2].trim(),
+        url: `${prefix}${encodeURIComponent(f.name)}`,
+      });
+    }
+  });
+  matches.sort((a, b) => a.order - b.order);
+  return matches;
+}
 
 function candidatesForSlug(slug, prefix) {
-  const custom = CUSTOM_CANDIDATES[slug];
-  if (custom) {
-    return custom.map((c) => ({ base: `${prefix}${c.base}`, label: c.label }));
-  }
   const list = [];
   for (let i = 1; i <= MAX_NUMBERED_SLOTS; i += 1) {
     list.push({ base: `${prefix}${slug}-${i}`, label: null });
@@ -79,12 +99,20 @@ async function resolveFirst(candidates) {
   return null;
 }
 
+async function findImages(slug, prefix, { firstOnly } = {}) {
+  if (BRACKET_LABEL_SLUGS.has(slug)) {
+    const matches = await bracketLabelCandidates(slug, prefix);
+    return firstOnly ? matches.slice(0, 1) : matches;
+  }
+  const candidates = candidatesForSlug(slug, prefix);
+  return firstOnly ? [await resolveFirst(candidates)].filter(Boolean) : resolveAll(candidates);
+}
+
 // ---- Homepage work-card thumbnails ----
 document.querySelectorAll('.thumb[data-slug]').forEach(async (thumb) => {
   const slug = thumb.dataset.slug;
   const prefix = thumb.dataset.prefix || 'images/';
-  const candidates = candidatesForSlug(slug, prefix);
-  const found = await resolveFirst(candidates);
+  const [found] = await findImages(slug, prefix, { firstOnly: true });
   if (!found) {
     const empty = document.createElement('div');
     empty.className = 'thumb-empty';
@@ -103,8 +131,7 @@ document.querySelectorAll('.thumb[data-slug]').forEach(async (thumb) => {
 document.querySelectorAll('.viewer[data-slug]').forEach(async (viewer) => {
   const slug = viewer.dataset.slug;
   const prefix = viewer.dataset.prefix || '../images/';
-  const candidates = candidatesForSlug(slug, prefix);
-  const found = await resolveAll(candidates);
+  const found = await findImages(slug, prefix);
 
   const frame = viewer.querySelector('.viewer-frame');
   const cap = viewer.querySelector('.viewer-cap');
