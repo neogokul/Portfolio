@@ -213,7 +213,7 @@ document.querySelectorAll('.viewer[data-slug]').forEach(async (viewer) => {
       if (group.label) {
         const label = document.createElement('span');
         label.className = 'viewer-thumb-label';
-        label.textContent = group.items.length > 1 ? `${group.label} (${group.items.length})` : group.label;
+        label.textContent = group.label;
         stack.appendChild(label);
       }
 
