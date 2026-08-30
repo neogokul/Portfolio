@@ -10,7 +10,7 @@ expected base filename until you add the file.
 | Case Study | Base filenames |
 |---|---|
 | Automated Sorting & Handling Line | `sorting-system-1`, `sorting-system-2`, `sorting-system-3` |
-| Cold-Tunnel Hibernation Sorter | `hibernation-tunnelv3` (Version 3, latest — shown first), `hibernation-tunnelv2` (Version 2), `hibernation-tunnelv1` (Version 1) |
+| Cold-Tunnel Hibernation Sorter | `hibernation-tunnelv3-1`, `hibernation-tunnelv2-2`, `hibernation-tunnelv1-3`, `hibernation-tunnelv1-4`, `hibernation-tunnelv3-5` (5 slots — see note below) |
 | AI-Guided Trolley Loader | `loader-system-1`, `loader-system-2`, `loader-system-3` |
 | Single-Actuator Inversion & Separation | `inversion-separation-1`, `inversion-separation-2`, `inversion-separation-3` |
 | Non-Contact Channeliser | `channelising-system-1`, `channelising-system-2`, `channelising-system-3` |
@@ -27,9 +27,15 @@ expected base filename until you add the file.
 
 **Notes**
 - Slot `-1` is used as the homepage card thumbnail and as the default large image
-  on that project's detail page (`work/<slug>.html`); slots `-2` and `-3` appear as
+  on that project's detail page (`work/<slug>.html`); the remaining slots appear as
   thumbnails in the detail page's viewer rail — click one to swap the large image.
-- You don't need all 3 per project — any missing slot just stays a labelled placeholder.
+- You don't need every slot for a project — any missing one just stays a labelled placeholder.
+- **Cold-Tunnel Hibernation Sorter is a special case**: it has 5 image slots instead
+  of 3, named `hibernation-tunnelv<version>-<order>`. The `v<version>` part is just a
+  label shown under each thumbnail ("Version 1/2/3") — display order is controlled
+  entirely by the trailing `-<order>` number (1 through 5), regardless of which
+  version it is. So `hibernation-tunnelv3-1` always shows first and
+  `hibernation-tunnelv3-5` always shows last, even though both are "Version 3".
 - If a base name matches more than one file extension (e.g. both `.png` and
   `.jpg` exist for the same slot), the page uses `.png` first, then `.jpg`,
   then `.jpeg`, then `.webp` — delete the one you don't want to avoid confusion.
