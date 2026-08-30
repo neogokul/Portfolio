@@ -219,7 +219,9 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
   color:var(--muted);text-transform:uppercase;
 }
 .viewer-cap .rev{color:var(--orange);}
+.viewer-cap .version{color:var(--blue);}
 .viewer-thumbs{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
+.viewer-thumb{display:flex;flex-direction:column;align-items:center;gap:6px;}
 .viewer-thumbs button{
   all:unset;cursor:pointer;width:76px;aspect-ratio:4/3;background:var(--surface2);
   border:1px solid var(--border);border-radius:4px;overflow:hidden;position:relative;
@@ -233,6 +235,11 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
 }
 .viewer-thumbs button img.broken{display:none;}
 .viewer-thumbs button img.broken + .placeholder{display:block;}
+.viewer-thumb-label{
+  font-family:'IBM Plex Mono',monospace;font-size:0.58rem;letter-spacing:0.04em;
+  color:var(--muted);text-transform:uppercase;text-align:center;
+}
+.viewer-thumb.active .viewer-thumb-label{color:var(--orange);}
 
 .project-meta{margin-bottom:6px;}
 .project-content h1{font-size:clamp(1.7rem,3.4vw,2.4rem);margin-bottom:6px;}

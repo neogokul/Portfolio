@@ -29,9 +29,11 @@ function loadAutoImage(img, onLoad) {
 
 document.querySelectorAll('img.auto-img').forEach((img) => loadAutoImage(img));
 
-// Sticky split-viewer: clicking a thumbnail swaps the main viewer image.
+// Sticky split-viewer: clicking a thumbnail swaps the main viewer image
+// and, if the thumbnail carries a version label, updates the caption too.
 document.querySelectorAll('.viewer').forEach((viewer) => {
   const mainImg = viewer.querySelector('.viewer-frame img.auto-img');
+  const versionTag = viewer.querySelector('.viewer-cap .version');
   const thumbButtons = viewer.querySelectorAll('.viewer-thumbs button');
   thumbButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -40,8 +42,15 @@ document.querySelectorAll('.viewer').forEach((viewer) => {
       mainImg.dataset.base = base;
       mainImg.classList.remove('is-loaded');
       loadAutoImage(mainImg);
-      thumbButtons.forEach((b) => b.classList.remove('active'));
+      thumbButtons.forEach((b) => {
+        b.classList.remove('active');
+        b.closest('.viewer-thumb')?.classList.remove('active');
+      });
       btn.classList.add('active');
+      btn.closest('.viewer-thumb')?.classList.add('active');
+      if (versionTag && btn.dataset.versionLabel) {
+        versionTag.textContent = btn.dataset.versionLabel;
+      }
     });
   });
 });

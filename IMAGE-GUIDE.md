@@ -10,7 +10,7 @@ expected base filename until you add the file.
 | Case Study | Base filenames |
 |---|---|
 | Automated Sorting & Handling Line | `sorting-system-1`, `sorting-system-2`, `sorting-system-3` |
-| Cold-Tunnel Hibernation Sorter | `hibernation-tunnel-1`, `hibernation-tunnel-2`, `hibernation-tunnel-3` |
+| Cold-Tunnel Hibernation Sorter | `hibernation-tunnelv3` (Version 3, latest — shown first), `hibernation-tunnelv2` (Version 2), `hibernation-tunnelv1` (Version 1) |
 | AI-Guided Trolley Loader | `loader-system-1`, `loader-system-2`, `loader-system-3` |
 | Single-Actuator Inversion & Separation | `inversion-separation-1`, `inversion-separation-2`, `inversion-separation-3` |
 | Non-Contact Channeliser | `channelising-system-1`, `channelising-system-2`, `channelising-system-3` |
