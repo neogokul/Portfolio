@@ -201,8 +201,17 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
   aspect-ratio:4/3;width:100%;background:var(--surface2);border:1px solid var(--border);
   border-radius:6px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;
 }
-.viewer-frame img{width:100%;height:100%;object-fit:contain;display:block;opacity:0;transition:opacity .25s ease;}
-.viewer-frame img.is-loaded{opacity:1;}
+.viewer-frame .viewer-bg{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  filter:blur(28px) brightness(0.45) saturate(1.1);transform:scale(1.15);
+  display:block;opacity:0;transition:opacity .25s ease;
+}
+.viewer-frame .viewer-bg.is-loaded{opacity:1;}
+.viewer-frame .viewer-main{
+  position:relative;width:100%;height:100%;object-fit:contain;display:block;
+  opacity:0;transition:opacity .25s ease;filter:drop-shadow(0 8px 24px rgba(0,0,0,0.55));
+}
+.viewer-frame .viewer-main.is-loaded{opacity:1;}
 .viewer-frame .viewer-empty{
   color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.04em;
   text-align:center;padding:16px;text-transform:uppercase;
