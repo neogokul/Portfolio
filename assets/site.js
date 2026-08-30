@@ -30,22 +30,38 @@ function fetchImagesDirectoryListing() {
   return directoryListingPromise;
 }
 
-async function bracketLabelCandidates(slug, prefix) {
+// Groups images whose filenames share the same whole-number "stack" —
+// "<slug>v-3.1(...)", "<slug>v-3.2(...)" etc all belong to stack 3, shown
+// as one clustered set of thumbnails with a single shared label. A file
+// with no decimal ("<slug>v-1(...)") is its own one-image stack.
+async function bracketLabelGroups(slug, prefix) {
   const files = await fetchImagesDirectoryListing();
-  const pattern = new RegExp(`^${slug}v-(\\d+)\\((.+)\\)\\.(png|jpe?g|webp)$`, 'i');
-  const matches = [];
+  const pattern = new RegExp(`^${slug}v-(\\d+)(?:\\.(\\d+))?\\((.+)\\)\\.(png|jpe?g|webp)$`, 'i');
+  const items = [];
   files.forEach((f) => {
     const m = f.name && f.name.match(pattern);
     if (m) {
-      matches.push({
-        order: parseInt(m[1], 10),
-        label: m[2].trim(),
+      items.push({
+        stack: parseInt(m[1], 10),
+        sub: m[2] ? parseInt(m[2], 10) : 0,
+        label: m[3].trim(),
         url: `${prefix}${encodeURIComponent(f.name)}`,
       });
     }
   });
-  matches.sort((a, b) => a.order - b.order);
-  return matches;
+  items.sort((a, b) => (a.stack - b.stack) || (a.sub - b.sub));
+
+  const groups = [];
+  const byStack = new Map();
+  items.forEach((item) => {
+    if (!byStack.has(item.stack)) {
+      const group = { label: item.label, items: [] };
+      byStack.set(item.stack, group);
+      groups.push(group);
+    }
+    byStack.get(item.stack).items.push(item);
+  });
+  return groups;
 }
 
 function candidatesForSlug(slug, prefix) {
@@ -99,21 +115,25 @@ async function resolveFirst(candidates) {
   return null;
 }
 
-async function findImages(slug, prefix, { firstOnly } = {}) {
+// Always resolves to the same shape: an array of groups, each
+// { label, items: [{url}, ...] }. A plain numbered project's images
+// each become their own one-item group (label: null).
+async function findImageGroups(slug, prefix) {
   if (BRACKET_LABEL_SLUGS.has(slug)) {
-    const matches = await bracketLabelCandidates(slug, prefix);
-    return firstOnly ? matches.slice(0, 1) : matches;
+    return bracketLabelGroups(slug, prefix);
   }
   const candidates = candidatesForSlug(slug, prefix);
-  return firstOnly ? [await resolveFirst(candidates)].filter(Boolean) : resolveAll(candidates);
+  const found = await resolveAll(candidates);
+  return found.map((item) => ({ label: null, items: [{ url: item.url }] }));
 }
 
 // ---- Homepage work-card thumbnails ----
 document.querySelectorAll('.thumb[data-slug]').forEach(async (thumb) => {
   const slug = thumb.dataset.slug;
   const prefix = thumb.dataset.prefix || 'images/';
-  const [found] = await findImages(slug, prefix, { firstOnly: true });
-  if (!found) {
+  const groups = await findImageGroups(slug, prefix);
+  const firstUrl = groups[0]?.items[0]?.url;
+  if (!firstUrl) {
     const empty = document.createElement('div');
     empty.className = 'thumb-empty';
     empty.textContent = 'Photos coming soon';
@@ -121,7 +141,7 @@ document.querySelectorAll('.thumb[data-slug]').forEach(async (thumb) => {
     return;
   }
   const img = document.createElement('img');
-  img.src = found.url;
+  img.src = firstUrl;
   img.alt = thumb.dataset.alt || '';
   img.loading = 'lazy';
   thumb.prepend(img);
@@ -131,14 +151,15 @@ document.querySelectorAll('.thumb[data-slug]').forEach(async (thumb) => {
 document.querySelectorAll('.viewer[data-slug]').forEach(async (viewer) => {
   const slug = viewer.dataset.slug;
   const prefix = viewer.dataset.prefix || '../images/';
-  const found = await findImages(slug, prefix);
+  const groups = await findImageGroups(slug, prefix);
 
   const frame = viewer.querySelector('.viewer-frame');
   const cap = viewer.querySelector('.viewer-cap');
   const capVersion = viewer.querySelector('.viewer-cap .version');
   const thumbsWrap = viewer.querySelector('.viewer-thumbs');
 
-  if (found.length === 0) {
+  const totalImages = groups.reduce((n, g) => n + g.items.length, 0);
+  if (totalImages === 0) {
     frame.innerHTML = '';
     const empty = document.createElement('div');
     empty.className = 'viewer-empty';
@@ -150,43 +171,53 @@ document.querySelectorAll('.viewer[data-slug]').forEach(async (viewer) => {
   }
 
   const mainImg = document.createElement('img');
-  mainImg.src = found[0].url;
+  mainImg.src = groups[0].items[0].url;
   mainImg.alt = viewer.dataset.alt || '';
   mainImg.className = 'is-loaded';
   frame.innerHTML = '';
   frame.appendChild(mainImg);
-  if (capVersion) capVersion.textContent = found[0].label;
+  if (capVersion) capVersion.textContent = groups[0].label;
 
-  if (found.length > 1 && thumbsWrap) {
-    found.forEach((item, idx) => {
-      const wrap = document.createElement('div');
-      wrap.className = idx === 0 ? 'viewer-thumb active' : 'viewer-thumb';
+  function selectThumb(btn, url, label) {
+    mainImg.src = url;
+    thumbsWrap.querySelectorAll('button').forEach((b) => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (capVersion && label) capVersion.textContent = label;
+  }
 
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      if (idx === 0) btn.classList.add('active');
+  if (totalImages > 1 && thumbsWrap) {
+    let photoNum = 0;
+    groups.forEach((group) => {
+      const stack = document.createElement('div');
+      stack.className = 'viewer-stack';
 
-      const thumbImg = document.createElement('img');
-      thumbImg.src = item.url;
-      thumbImg.alt = `${viewer.dataset.alt || ''} — photo ${idx + 1}`;
-      btn.appendChild(thumbImg);
-      wrap.appendChild(btn);
+      const row = document.createElement('div');
+      row.className = 'viewer-stack-row';
+      stack.appendChild(row);
 
-      if (item.label) {
+      group.items.forEach((item) => {
+        photoNum += 1;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        if (photoNum === 1) btn.classList.add('active');
+
+        const thumbImg = document.createElement('img');
+        thumbImg.src = item.url;
+        thumbImg.alt = `${viewer.dataset.alt || ''} — photo ${photoNum}`;
+        btn.appendChild(thumbImg);
+        row.appendChild(btn);
+
+        btn.addEventListener('click', () => selectThumb(btn, item.url, group.label));
+      });
+
+      if (group.label) {
         const label = document.createElement('span');
         label.className = 'viewer-thumb-label';
-        label.textContent = item.label;
-        wrap.appendChild(label);
+        label.textContent = group.items.length > 1 ? `${group.label} (${group.items.length})` : group.label;
+        stack.appendChild(label);
       }
 
-      thumbsWrap.appendChild(wrap);
-
-      btn.addEventListener('click', () => {
-        mainImg.src = item.url;
-        thumbsWrap.querySelectorAll('.viewer-thumb').forEach((w) => w.classList.remove('active'));
-        wrap.classList.add('active');
-        if (capVersion && item.label) capVersion.textContent = item.label;
-      });
+      thumbsWrap.appendChild(stack);
     });
   } else if (thumbsWrap) {
     thumbsWrap.remove();

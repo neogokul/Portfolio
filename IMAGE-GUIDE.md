@@ -43,29 +43,31 @@ rename these on GitHub whenever you like **without asking me to update the
 code**. Name files:
 
 ```
-hibernation-tunnelv-<order>(<label you want shown>).<ext>
+hibernation-tunnelv-<stack>.<sub>(<label you want shown>).<ext>
 ```
 
-- `<order>` controls display position (1, 2, 3, …) — purely a sort key, not
-  shown anywhere.
-- `<label you want shown>` — whatever text you put in the parentheses is
-  displayed verbatim as that photo's caption/thumbnail label (e.g. "Version 3",
-  "Prototype Version 1", anything).
+- `<stack>` groups images together — every file with the same `<stack>` number
+  is clubbed into one visual cluster of thumbnails sharing a single label,
+  instead of a long flat row. Stacks display left to right in ascending
+  `<stack>` order.
+- `.<sub>` (optional) orders images *within* a stack — `3.1`, `3.2`, `3.3` all
+  belong to stack 3 and appear in that order inside it. Leave it off
+  (`hibernation-tunnelv-4(...)`) for a stack with just one image.
+- `<label you want shown>` — whatever text is in the parentheses is shown
+  under the stack verbatim (e.g. "Version 3", "Prototype Version 1", anything).
+  If a stack has multiple images, all of them should carry the same label text
+  — the page shows it once per stack, with a count like "Version 1 (3)".
 - `<ext>` must be `png`, `jpg`, `jpeg`, or `webp` — **not `.HEIC`**, which
   iPhones save by default but browsers cannot display at all. Convert HEIC
   photos to JPG before uploading (iPhone: Settings → Camera → Formats → "Most
   Compatible" before taking new photos, or use any online HEIC→JPG converter
   for existing ones).
 
-Current files:
-```
-hibernation-tunnelv-1(Version 3).jpg
-hibernation-tunnelv-2(Version 2).jpg
-hibernation-tunnelv-3(Version 1).jpg
-hibernation-tunnelv-4(Version 1).jpg   ⚠ currently an empty/corrupted file — re-upload
-hibernation-tunnelv-5(Version 3).jpg   ⚠ currently an empty/corrupted file — re-upload
-hibernation-tunnelv-6(Version 1).HEIC  ⚠ HEIC — won't display, convert to .jpg
-```
+**Example:** `hibernation-tunnelv-1.1(Version 3).jpg`,
+`hibernation-tunnelv-2.1(Version 2).jpg`, `hibernation-tunnelv-3.1(Version 1).jpg`,
+`hibernation-tunnelv-3.2(Version 1).jpg`, `hibernation-tunnelv-3.3(Version 1).jpg`
+→ renders as three stacks: "Version 3" (1 image), "Version 2" (1 image), and
+"Version 1 (3)" (three images clubbed together, all clickable).
 
 **How this works technically:** the page fetches the live file listing from
 GitHub's API and reads it directly, so any rename takes effect the moment you
