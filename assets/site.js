@@ -64,13 +64,7 @@ async function bracketLabelGroups(slug, prefix) {
   return groups;
 }
 
-function candidatesForSlug(slug, prefix) {
-  const list = [];
-  for (let i = 1; i <= MAX_NUMBERED_SLOTS; i += 1) {
-    list.push({ base: `${prefix}${slug}-${i}`, label: null });
-  }
-  return list;
-}
+const MAX_SUB_SLOTS = 6;
 
 // Tries each extension for one base filename; resolves the working URL
 // or null if none of them load.
@@ -93,46 +87,57 @@ function probeImage(base) {
   });
 }
 
-// Probes every candidate in parallel and returns only the ones that
-// exist, in their original order.
-async function resolveAll(candidates) {
-  const results = await Promise.all(
-    candidates.map(async (c) => {
-      const url = await probeImage(c.base);
-      return url ? { ...c, url } : null;
+// Numbered projects support the same "<slug>-<n>" or clubbed
+// "<slug>-<n>.<sub>" naming as the bracket-label projects, just without a
+// caption. Every <n>.<sub> file sharing the same whole number <n> is
+// grouped into one thumbnail stack; a plain "<slug>-<n>" file is its own
+// one-image stack.
+async function numberedGroups(slug, prefix) {
+  const majors = Array.from({ length: MAX_NUMBERED_SLOTS }, (_, i) => i + 1);
+  const groups = await Promise.all(
+    majors.map(async (n) => {
+      const bases = [`${prefix}${slug}-${n}`];
+      for (let s = 1; s <= MAX_SUB_SLOTS; s += 1) bases.push(`${prefix}${slug}-${n}.${s}`);
+      const urls = await Promise.all(bases.map((b) => probeImage(b)));
+      const items = urls.filter(Boolean).map((url) => ({ url }));
+      return items.length ? { label: null, items } : null;
     })
   );
-  return results.filter(Boolean);
+  return groups.filter(Boolean);
 }
 
-// Probes candidates one at a time (lowest index first) and stops at the
-// first one found — cheaper than resolveAll when only one image is needed.
-async function resolveFirst(candidates) {
-  for (const c of candidates) {
-    const url = await probeImage(c.base); // eslint-disable-line no-await-in-loop
-    if (url) return { ...c, url };
+// Cheap version of the above for homepage cards, which only need the very
+// first image: stops as soon as one is found instead of probing everything.
+async function firstNumberedImage(slug, prefix) {
+  for (let n = 1; n <= MAX_NUMBERED_SLOTS; n += 1) {
+    // eslint-disable-next-line no-await-in-loop
+    const plain = await probeImage(`${prefix}${slug}-${n}`);
+    if (plain) return plain;
+    for (let s = 1; s <= MAX_SUB_SLOTS; s += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      const sub = await probeImage(`${prefix}${slug}-${n}.${s}`);
+      if (sub) return sub;
+    }
   }
   return null;
 }
 
 // Always resolves to the same shape: an array of groups, each
-// { label, items: [{url}, ...] }. A plain numbered project's images
-// each become their own one-item group (label: null).
+// { label, items: [{url}, ...] }.
 async function findImageGroups(slug, prefix) {
   if (BRACKET_LABEL_SLUGS.has(slug)) {
     return bracketLabelGroups(slug, prefix);
   }
-  const candidates = candidatesForSlug(slug, prefix);
-  const found = await resolveAll(candidates);
-  return found.map((item) => ({ label: null, items: [{ url: item.url }] }));
+  return numberedGroups(slug, prefix);
 }
 
 // ---- Homepage work-card thumbnails ----
 document.querySelectorAll('.thumb[data-slug]').forEach(async (thumb) => {
   const slug = thumb.dataset.slug;
   const prefix = thumb.dataset.prefix || 'images/';
-  const groups = await findImageGroups(slug, prefix);
-  const firstUrl = groups[0]?.items[0]?.url;
+  const firstUrl = BRACKET_LABEL_SLUGS.has(slug)
+    ? (await bracketLabelGroups(slug, prefix))[0]?.items[0]?.url
+    : await firstNumberedImage(slug, prefix);
   if (!firstUrl) {
     const empty = document.createElement('div');
     empty.className = 'thumb-empty';

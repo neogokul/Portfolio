@@ -11,13 +11,24 @@ in 1 photo, 10 photos, or none at all, and the page adapts:
   underneath to switch between the rest.
 
 **Format:** any of `.png`, `.jpg`, `.jpeg`, `.webp` work — no need to match
-extensions, the page tries each one automatically.
+extensions, the page tries each one automatically. **The file must actually be
+that format** — renaming a `.HEIC` file to `.png` does not convert it, and
+browsers will fail to display it. Convert with an actual HEIC→JPG/PNG tool
+first (iPhone: Settings → Camera → Formats → "Most Compatible" prevents this
+for future photos).
 
 ## Naming convention
 
 For every project **except** Cold-Tunnel Hibernation Sorter, name files
-`<slug>-1`, `<slug>-2`, `<slug>-3`, … up to as many as you have (checked up to
-15). Numbers don't need to be contiguous, but sequential from 1 is simplest.
+`<slug>-<n>` or `<slug>-<n>.<sub>`:
+
+- `<n>` is the stack/group number — every file sharing the same `<n>` is
+  clubbed into one tight visual cluster of thumbnails (a shared border, no
+  individual labels), instead of a long flat row. Stacks display left to
+  right in ascending `<n>` order. Checked up to `<n> = 15`.
+- `.<sub>` (optional) orders images *within* a stack — `1.1`, `1.2`, `1.3` all
+  belong to stack 1 and appear in that order inside it. Leave it off
+  (`<slug>-2`) for a stack with just one image. Checked up to `.6` per stack.
 
 | Case Study | Slug |
 |---|---|
@@ -33,12 +44,15 @@ For every project **except** Cold-Tunnel Hibernation Sorter, name files
 | Non-Contact Cage & Pooter | `cage-system` |
 | Low-Cost Arm Rehabilitation Device | `arm-rehab` |
 
-**Example:** `images/sorting-system-1.png`, `images/sorting-system-2.jpg` — the
-page will show both, in that order, even though slot `-3` doesn't exist.
+**Example:** `sorting-system-1.1.png`, `sorting-system-1.2.jpg`,
+`sorting-system-1.3.png` → all three club together into one stack (since they
+share `1` before the decimal) and appear as one cluster of 3 clickable
+thumbnails, in `.1`/`.2`/`.3` order. `sorting-system-2` would be a separate,
+second stack.
 
 ### Cold-Tunnel Hibernation Sorter (special case)
 
-This project reads its caption text straight out of the filename, so you can
+This project additionally reads a caption out of the filename, so you can
 rename these on GitHub whenever you like **without asking me to update the
 code**. Name files:
 
@@ -46,33 +60,26 @@ code**. Name files:
 hibernation-tunnelv-<stack>.<sub>(<label you want shown>).<ext>
 ```
 
-- `<stack>` groups images together — every file with the same `<stack>` number
-  is clubbed into one visual cluster of thumbnails sharing a single label,
-  instead of a long flat row. Stacks display left to right in ascending
-  `<stack>` order.
-- `.<sub>` (optional) orders images *within* a stack — `3.1`, `3.2`, `3.3` all
-  belong to stack 3 and appear in that order inside it. Leave it off
-  (`hibernation-tunnelv-4(...)`) for a stack with just one image.
+Same stacking rules as above (`<stack>` clubs images together, `.<sub>` orders
+them within the stack), plus:
+
 - `<label you want shown>` — whatever text is in the parentheses is shown
   under the stack verbatim (e.g. "Version 3", "Prototype Version 1", anything).
-  If a stack has multiple images, all of them should carry the same label text
-  — the page shows it once per stack, with a count like "Version 1 (3)".
-- `<ext>` must be `png`, `jpg`, `jpeg`, or `webp` — **not `.HEIC`**, which
-  iPhones save by default but browsers cannot display at all. Convert HEIC
-  photos to JPG before uploading (iPhone: Settings → Camera → Formats → "Most
-  Compatible" before taking new photos, or use any online HEIC→JPG converter
-  for existing ones).
+  If a stack has multiple images, they should all carry the same label text —
+  it's shown once per stack.
 
 **Example:** `hibernation-tunnelv-1.1(Version 3).jpg`,
 `hibernation-tunnelv-2.1(Version 2).jpg`, `hibernation-tunnelv-3.1(Version 1).jpg`,
 `hibernation-tunnelv-3.2(Version 1).jpg`, `hibernation-tunnelv-3.3(Version 1).jpg`
-→ renders as three stacks: "Version 3" (1 image), "Version 2" (1 image), and
-"Version 1 (3)" (three images clubbed together, all clickable).
+→ renders as three stacks: "Version 3", "Version 2", and "Version 1" (the last
+one clubbing 3 images together).
 
-**How this works technically:** the page fetches the live file listing from
-GitHub's API and reads it directly, so any rename takes effect the moment you
-save it on GitHub — no code change, ever. The one caveat: GitHub's public API
-allows 60 such requests per hour per visitor IP address; for normal portfolio
-traffic this is a non-issue, but if it's ever exceeded, this project's photos
-temporarily show "Photos coming soon" until the hour resets, rather than an
-error. Every other project is unaffected since they don't use this lookup.
+**How this works technically:** unlike every other project (which the browser
+checks directly for known filenames), this one page also fetches the live file
+listing from GitHub's API, so a bracket-text rename takes effect the moment
+you save it on GitHub — no code change, ever. The one caveat: GitHub's public
+API allows 60 such requests per hour per visitor IP address; for normal
+portfolio traffic this is a non-issue, but if it's ever exceeded, this
+project's photos temporarily show "Photos coming soon" until the hour resets,
+rather than an error. Every other project is unaffected since they don't use
+this lookup.
