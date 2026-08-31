@@ -3,22 +3,26 @@ const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 // ---------------------------------------------------------------------
-// Dynamic image loading: for most projects, probes images/ for whatever
-// <slug>-<n> files actually exist. A few projects instead read the
-// images/ folder directly from GitHub and pull their display label out
-// of a "(...)" suffix in the filename, so renaming a file's bracketed
-// text on GitHub is all that's needed to change its caption — no code
-// change required.
+// Dynamic image loading: the images/ folder listing is read live from
+// GitHub once per page load, and every project's photos are matched out
+// of it by filename pattern "<slug><sep><n>(.<sub>)?(<label>)?.<ext>" —
+// <n> clubs same-numbered files into one thumbnail stack, an optional
+// "(...)" suffix becomes that stack's caption. Renaming a file (or its
+// bracketed text) on GitHub takes effect immediately, no code change.
+// If the live listing can't be fetched (e.g. GitHub API rate limit), each
+// project falls back to guessing plain "<slug>-<n>" filenames directly —
+// no captions in that fallback, but photos still show.
 // ---------------------------------------------------------------------
 
 const IMAGE_EXTENSIONS = ['png', 'jpg', 'jpeg', 'webp'];
 const MAX_NUMBERED_SLOTS = 15;
+const MAX_SUB_SLOTS = 6;
 const GITHUB_REPO = 'neogokul/Portfolio';
 
-// Projects whose files are named "<slug>v-<order>(<label>).<ext>" — order
-// controls display position, whatever is inside the parentheses is shown
-// as the caption/thumbnail label, read live from GitHub on each page load.
-const BRACKET_LABEL_SLUGS = new Set(['hibernation-tunnel']);
+// Most projects separate the slug from the stack number with a plain
+// hyphen ("sorting-system-1.5(...)"); hibernation-tunnel historically
+// uses "v-" ("hibernation-tunnelv-1.5(...)").
+const SLUG_SEPARATORS = { 'hibernation-tunnel': 'v-' };
 
 let directoryListingPromise = null;
 function fetchImagesDirectoryListing() {
@@ -31,12 +35,14 @@ function fetchImagesDirectoryListing() {
 }
 
 // Groups images whose filenames share the same whole-number "stack" —
-// "<slug>v-3.1(...)", "<slug>v-3.2(...)" etc all belong to stack 3, shown
-// as one clustered set of thumbnails with a single shared label. A file
-// with no decimal ("<slug>v-1(...)") is its own one-image stack.
-async function bracketLabelGroups(slug, prefix) {
+// "<slug>-3.1(...)", "<slug>-3.2(...)" etc all belong to stack 3, shown
+// as one clustered set of thumbnails. A file with no decimal
+// ("<slug>-1(...)") is its own one-image stack. The bracketed "(...)"
+// suffix is optional; when present it becomes that photo's caption.
+async function listingGroups(slug, prefix) {
   const files = await fetchImagesDirectoryListing();
-  const pattern = new RegExp(`^${slug}v-(\\d+)(?:\\.(\\d+))?\\((.+)\\)\\.(png|jpe?g|webp)$`, 'i');
+  const sep = SLUG_SEPARATORS[slug] || '-';
+  const pattern = new RegExp(`^${slug}${sep}(\\d+)(?:\\.(\\d+))?(?:\\((.+)\\))?\\.(png|jpe?g|webp|heic)$`, 'i');
   const items = [];
   files.forEach((f) => {
     const m = f.name && f.name.match(pattern);
@@ -44,7 +50,7 @@ async function bracketLabelGroups(slug, prefix) {
       items.push({
         stack: parseInt(m[1], 10),
         sub: m[2] ? parseInt(m[2], 10) : 0,
-        label: m[3].trim(),
+        label: m[3] ? m[3].trim() : null,
         url: `${prefix}${encodeURIComponent(f.name)}`,
       });
     }
@@ -59,12 +65,14 @@ async function bracketLabelGroups(slug, prefix) {
       byStack.set(item.stack, group);
       groups.push(group);
     }
-    byStack.get(item.stack).items.push(item);
+    const group = byStack.get(item.stack);
+    group.items.push(item);
+    // Surface any labelled photo's text even if an earlier, unlabelled
+    // photo in the same stack was added first.
+    if (!group.label && item.label) group.label = item.label;
   });
   return groups;
 }
-
-const MAX_SUB_SLOTS = 6;
 
 // Tries each extension for one base filename; resolves the working URL
 // or null if none of them load.
@@ -106,28 +114,14 @@ async function numberedGroups(slug, prefix) {
   return groups.filter(Boolean);
 }
 
-// Cheap version of the above for homepage cards, which only need the very
-// first image: stops as soon as one is found instead of probing everything.
-async function firstNumberedImage(slug, prefix) {
-  for (let n = 1; n <= MAX_NUMBERED_SLOTS; n += 1) {
-    // eslint-disable-next-line no-await-in-loop
-    const plain = await probeImage(`${prefix}${slug}-${n}`);
-    if (plain) return plain;
-    for (let s = 1; s <= MAX_SUB_SLOTS; s += 1) {
-      // eslint-disable-next-line no-await-in-loop
-      const sub = await probeImage(`${prefix}${slug}-${n}.${s}`);
-      if (sub) return sub;
-    }
-  }
-  return null;
-}
-
 // Always resolves to the same shape: an array of groups, each
-// { label, items: [{url}, ...] }.
+// { label, items: [{url}, ...] }. Tries the live GitHub listing first
+// (this is what supports bracketed captions); if that comes back empty —
+// no matching files, or the listing fetch itself failed — falls back to
+// guessing plain "<slug>-<n>" filenames directly.
 async function findImageGroups(slug, prefix) {
-  if (BRACKET_LABEL_SLUGS.has(slug)) {
-    return bracketLabelGroups(slug, prefix);
-  }
+  const fromListing = await listingGroups(slug, prefix);
+  if (fromListing.length) return fromListing;
   return numberedGroups(slug, prefix);
 }
 
@@ -135,9 +129,8 @@ async function findImageGroups(slug, prefix) {
 document.querySelectorAll('.thumb[data-slug]').forEach(async (thumb) => {
   const slug = thumb.dataset.slug;
   const prefix = thumb.dataset.prefix || 'images/';
-  const firstUrl = BRACKET_LABEL_SLUGS.has(slug)
-    ? (await bracketLabelGroups(slug, prefix))[0]?.items[0]?.url
-    : await firstNumberedImage(slug, prefix);
+  const groups = await findImageGroups(slug, prefix);
+  const firstUrl = groups[0]?.items[0]?.url;
   if (!firstUrl) {
     const empty = document.createElement('div');
     empty.className = 'thumb-empty';
