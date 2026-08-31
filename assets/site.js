@@ -175,19 +175,23 @@ document.querySelectorAll('.viewer[data-slug]').forEach(async (viewer) => {
     return;
   }
 
-  // The viewer frame is a fixed-size bounding square: whichever dimension
-  // of a given photo hits that square's edge first stays capped, and the
-  // other dimension (and the frame itself) shrinks to match the photo's
-  // aspect ratio, so nothing is ever cropped or padded with empty space.
-  function frameCapPx() {
-    return window.innerWidth <= 600 ? 300 : 440;
+  // The viewer frame's height is capped at the fixed stage height; its
+  // width can use the full column width. Whichever limit a given photo
+  // hits first governs the scale, so nothing is ever cropped or padded
+  // with empty space, and wide photos aren't needlessly shrunk just
+  // because they're not tall.
+  const stage = frame.parentElement;
+  function frameCaps() {
+    const heightCap = window.innerWidth <= 600 ? 300 : 440;
+    const widthCap = stage.clientWidth || heightCap;
+    return { heightCap, widthCap };
   }
 
   function sizeFrameToImage(imgEl) {
-    const cap = frameCapPx();
-    const w = imgEl.naturalWidth || cap;
-    const h = imgEl.naturalHeight || cap;
-    const scale = Math.min(1, cap / w, cap / h);
+    const { heightCap, widthCap } = frameCaps();
+    const w = imgEl.naturalWidth || widthCap;
+    const h = imgEl.naturalHeight || heightCap;
+    const scale = Math.min(1, widthCap / w, heightCap / h);
     frame.style.width = `${Math.round(w * scale)}px`;
     frame.style.height = `${Math.round(h * scale)}px`;
   }
