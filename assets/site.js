@@ -205,7 +205,7 @@ document.querySelectorAll('.viewer[data-slug]').forEach(async (viewer) => {
   frame.appendChild(mainImg);
 
   mainImg.src = groups[0].items[0].url;
-  if (capVersion) capVersion.textContent = groups[0].label;
+  if (capVersion) capVersion.textContent = groups[0].items[0].label || groups[0].label;
 
   window.addEventListener('resize', () => sizeFrameToImage(mainImg));
 
@@ -238,7 +238,7 @@ document.querySelectorAll('.viewer[data-slug]').forEach(async (viewer) => {
         btn.appendChild(thumbImg);
         row.appendChild(btn);
 
-        btn.addEventListener('click', () => selectThumb(btn, item.url, group.label));
+        btn.addEventListener('click', () => selectThumb(btn, item.url, item.label || group.label));
       });
 
       if (group.label) {
