@@ -197,6 +197,10 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
 }
 .viewer{position:sticky;top:88px;}
 @media (max-width:900px){.viewer{position:static;}}
+.viewer-stage{
+  height:440px;display:flex;align-items:center;justify-content:center;
+}
+@media (max-width:600px){.viewer-stage{height:300px;}}
 .viewer-frame{
   max-width:100%;background:var(--surface2);border:1px solid var(--border);
   border-radius:6px;overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;
