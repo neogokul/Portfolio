@@ -175,15 +175,35 @@ document.querySelectorAll('.viewer[data-slug]').forEach(async (viewer) => {
     return;
   }
 
+  // The viewer frame is a fixed-size bounding square: whichever dimension
+  // of a given photo hits that square's edge first stays capped, and the
+  // other dimension (and the frame itself) shrinks to match the photo's
+  // aspect ratio, so nothing is ever cropped or padded with empty space.
+  function frameCapPx() {
+    return window.innerWidth <= 600 ? 300 : 440;
+  }
+
+  function sizeFrameToImage(imgEl) {
+    const cap = frameCapPx();
+    const w = imgEl.naturalWidth || cap;
+    const h = imgEl.naturalHeight || cap;
+    const scale = Math.min(1, cap / w, cap / h);
+    frame.style.width = `${Math.round(w * scale)}px`;
+    frame.style.height = `${Math.round(h * scale)}px`;
+  }
+
   const mainImg = document.createElement('img');
   mainImg.className = 'viewer-main is-loaded';
   mainImg.alt = viewer.dataset.alt || '';
+  mainImg.onload = () => sizeFrameToImage(mainImg);
 
   frame.innerHTML = '';
   frame.appendChild(mainImg);
 
   mainImg.src = groups[0].items[0].url;
   if (capVersion) capVersion.textContent = groups[0].label;
+
+  window.addEventListener('resize', () => sizeFrameToImage(mainImg));
 
   function selectThumb(btn, url, label) {
     mainImg.src = url;
