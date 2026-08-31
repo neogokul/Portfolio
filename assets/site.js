@@ -198,7 +198,7 @@ document.querySelectorAll('.viewer[data-slug]').forEach(async (viewer) => {
   frame.appendChild(mainImg);
 
   mainImg.src = groups[0].items[0].url;
-  if (capVersion) capVersion.textContent = groups[0].items[0].label || groups[0].label;
+  if (capVersion) capVersion.textContent = groups[0].items[0].label || '';
 
   window.addEventListener('resize', () => sizeFrameToImage(mainImg));
 
@@ -206,7 +206,7 @@ document.querySelectorAll('.viewer[data-slug]').forEach(async (viewer) => {
     mainImg.src = url;
     thumbsWrap.querySelectorAll('button').forEach((b) => b.classList.remove('active'));
     btn.classList.add('active');
-    if (capVersion && label) capVersion.textContent = label;
+    if (capVersion) capVersion.textContent = label || '';
   }
 
   if (totalImages > 1 && thumbsWrap) {
@@ -231,15 +231,8 @@ document.querySelectorAll('.viewer[data-slug]').forEach(async (viewer) => {
         btn.appendChild(thumbImg);
         row.appendChild(btn);
 
-        btn.addEventListener('click', () => selectThumb(btn, item.url, item.label || group.label));
+        btn.addEventListener('click', () => selectThumb(btn, item.url, item.label));
       });
-
-      if (group.label) {
-        const label = document.createElement('span');
-        label.className = 'viewer-thumb-label';
-        label.textContent = group.label;
-        stack.appendChild(label);
-      }
 
       thumbsWrap.appendChild(stack);
     });

@@ -222,6 +222,7 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
 }
 .viewer-cap .rev{color:var(--orange);}
 .viewer-cap .version{color:var(--blue);}
+.viewer-cap .version:empty{display:none;}
 .viewer-thumbs{display:flex;gap:14px;margin-top:14px;flex-wrap:wrap;}
 .viewer-stack{
   display:flex;flex-direction:column;align-items:center;gap:6px;
@@ -236,11 +237,6 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
 .viewer-thumbs button img{width:100%;height:100%;object-fit:cover;}
 .viewer-thumbs button.active{border-color:var(--orange);}
 .viewer-thumbs button:hover{border-color:var(--blue);}
-.viewer-thumb-label{
-  font-family:'IBM Plex Mono',monospace;font-size:0.58rem;letter-spacing:0.04em;
-  color:var(--muted);text-transform:uppercase;text-align:center;
-}
-.viewer-stack:has(button.active) .viewer-thumb-label{color:var(--orange);}
 
 .project-meta{margin-bottom:6px;}
 .project-content h1{font-size:clamp(1.7rem,3.4vw,2.4rem);margin-bottom:6px;}
