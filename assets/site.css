@@ -54,25 +54,25 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
   position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden;
 }
 .hero-portrait img{
-  width:100%;height:100%;object-fit:cover;object-position:center 22%;
-  filter:blur(22px) brightness(0.4) saturate(1.15);
+  width:100%;height:100%;object-fit:cover;object-position:center 30%;
+  filter:blur(10px) brightness(0.75) saturate(1.2);
   transform:scale(1.1);
   display:block;
 }
 .hero-portrait::before{
   content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 70% 35%, rgba(255,107,26,0.16), transparent 60%);
+  background:radial-gradient(ellipse at 70% 35%, rgba(255,107,26,0.14), transparent 60%);
   mix-blend-mode:overlay;
 }
 .hero-portrait::after{
   content:'';position:absolute;inset:0;
-  background:linear-gradient(180deg, rgba(11,13,16,0.35) 0%, rgba(11,13,16,0.75) 100%);
+  background:linear-gradient(180deg, rgba(11,13,16,0.12) 0%, rgba(11,13,16,0.55) 100%);
 }
 .plate{
   position:relative;z-index:2;
-  background:rgba(20,23,27,0.6);
-  backdrop-filter:blur(14px) saturate(1.1);
-  -webkit-backdrop-filter:blur(14px) saturate(1.1);
+  background:rgba(20,23,27,0.34);
+  backdrop-filter:blur(4px) saturate(1.1);
+  -webkit-backdrop-filter:blur(4px) saturate(1.1);
   border:1px solid rgba(255,255,255,0.08);
   border-radius:6px;
   padding:48px clamp(24px,5vw,64px);
