@@ -130,6 +130,7 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
   padding-left:clamp(20px,3vw,40px);
   display:flex;flex-direction:column;justify-content:center;gap:16px;
 }
+@media (min-width:821px){.plate-data{padding-top:150px;}}
 .data-row{display:flex;justify-content:space-between;gap:12px;font-family:'IBM Plex Mono',monospace;font-size:0.78rem;border-bottom:1px dashed var(--border);padding-bottom:10px;}
 .data-row .k{color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;}
 .data-row .v{color:var(--text);text-align:right;}
