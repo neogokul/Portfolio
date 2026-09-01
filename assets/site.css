@@ -88,6 +88,18 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
 }
 .rivet.tl{top:14px;left:14px}.rivet.tr{top:14px;right:14px}
 .rivet.bl{bottom:14px;left:14px}.rivet.br{bottom:14px;right:14px}
+.hero-id{
+  position:absolute;top:-34px;right:clamp(20px,6vw,64px);z-index:3;
+  width:112px;height:112px;border-radius:50%;
+  border:3px solid var(--orange);
+  box-shadow:0 10px 28px rgba(0,0,0,0.55), 0 0 0 6px rgba(11,13,16,0.85);
+  overflow:hidden;background:var(--surface2);
+}
+.hero-id img{
+  width:100%;height:100%;object-fit:cover;
+  filter:contrast(1.06) saturate(1.05);
+}
+@media (max-width:560px){.hero-id{width:84px;height:84px;top:-24px;right:20px;}}
 .plate-eyebrow{
   font-family:'IBM Plex Mono',monospace;font-size:0.72rem;letter-spacing:0.16em;
   color:var(--orange);text-transform:uppercase;margin-bottom:14px;
