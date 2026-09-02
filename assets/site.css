@@ -322,7 +322,8 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
 .edu-card .meta{color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:0.72rem;}
 
 /* ---------- HOBBY PROJECTS ---------- */
-.hobby-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;}
+.hobby-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+@media (max-width:820px){.hobby-grid{grid-template-columns:1fr;}}
 .hobby-card{
   background:var(--surface);border:1px solid var(--border);border-radius:6px;
   padding:24px;display:flex;flex-direction:row;align-items:stretch;gap:20px;text-decoration:none;color:inherit;
