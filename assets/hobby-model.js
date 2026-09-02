@@ -31,9 +31,7 @@ function ensureThree() {
 
 const BLINK_MORPHS = ['eyeBlinkLeft', 'eyeBlinkRight'];
 const HAPPY_MORPHS = ['mouthSmileLeft', 'mouthSmileRight'];
-const HAPPY_EYE_MORPHS = ['eyeSquintLeft', 'eyeSquintRight'];
-const HAPPY_CHEEK_MORPHS = ['cheekSquintLeft', 'cheekSquintRight'];
-const HAPPY_BROW_MORPHS = ['browOuterUpLeft', 'browOuterUpRight'];
+const HAPPY_DIMPLE_MORPHS = ['mouthDimpleLeft', 'mouthDimpleRight'];
 
 function initHobbyModel(container) {
   const modelUrl = container.dataset.model;
@@ -94,6 +92,7 @@ function initHobbyModel(container) {
   }
 
 
+
   new THREE.GLTFLoader().load(
     modelUrl,
     (gltf) => {
@@ -132,13 +131,17 @@ function initHobbyModel(container) {
   function tick(now) {
     rafId = requestAnimationFrame(tick);
 
-    // Slow "happy" breathing smile — never fully neutral, gently pulses.
-    const t = now / 1500;
-    const smile = 0.32 + 0.22 * Math.sin(t);
+    // Slow "happy" breathing smile — eases between a pleasant resting
+    // half-smile and a full greeting grin. Deliberately no eye-squint: on
+    // this mesh it read as drowsy rather than warm, so a clear mouth curve
+    // (with a touch of jaw/dimple to keep it from looking pasted-on) does
+    // the work instead.
+    const t = now / 2200;
+    const wave = (Math.sin(t) + 1) / 2; // 0..1, eases at the ends
+    const smile = 0.35 + 0.5 * wave;
     HAPPY_MORPHS.forEach((m) => setMorph(m, smile));
-    HAPPY_EYE_MORPHS.forEach((m) => setMorph(m, smile * 0.35));
-    HAPPY_CHEEK_MORPHS.forEach((m) => setMorph(m, smile * 0.5));
-    HAPPY_BROW_MORPHS.forEach((m) => setMorph(m, smile * 0.12));
+    HAPPY_DIMPLE_MORPHS.forEach((m) => setMorph(m, smile * 0.35));
+    setMorph('jawOpen', smile * 0.08);
 
     // Periodic blink, independent timer with slight randomness.
     if (blinkStart === null && now >= nextBlinkAt) {
