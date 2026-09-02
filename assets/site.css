@@ -322,22 +322,25 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
 .edu-card .meta{color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:0.72rem;}
 
 /* ---------- HOBBY PROJECTS ---------- */
-.hobby-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+.hobby-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:20px;}
 .hobby-card{
   background:var(--surface);border:1px solid var(--border);border-radius:6px;
-  padding:24px;display:flex;flex-direction:column;gap:12px;text-decoration:none;color:inherit;
+  padding:24px;display:flex;flex-direction:row;align-items:stretch;gap:20px;text-decoration:none;color:inherit;
   transition:border-color .2s,transform .2s;
 }
 .hobby-card:hover{border-color:var(--blue);transform:translateY(-2px);}
-.hobby-model{
-  margin:-24px -24px 4px -24px;height:150px;border-radius:6px 6px 0 0;
-  overflow:hidden;position:relative;background:radial-gradient(ellipse at 50% 30%,#111a20,#070c0e);
+.hobby-card-body{display:flex;flex-direction:column;gap:12px;flex:1;min-width:0;}
+.hobby-media{
+  flex-shrink:0;width:140px;border-radius:6px;overflow:hidden;position:relative;
+  background:radial-gradient(ellipse at 50% 30%,#111a20,#070c0e);
 }
+.hobby-media img{width:100%;height:100%;object-fit:cover;display:block;}
+.hobby-model{width:100%;height:100%;position:relative;}
 .hobby-model canvas{display:block;width:100%;height:100%;}
 .hobby-model .hobby-model-hint{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  font-family:'IBM Plex Mono',monospace;font-size:0.62rem;letter-spacing:0.06em;text-transform:uppercase;
-  color:var(--muted);transition:opacity .3s;pointer-events:none;
+  font-family:'IBM Plex Mono',monospace;font-size:0.6rem;letter-spacing:0.04em;text-transform:uppercase;
+  color:var(--muted);text-align:center;padding:8px;transition:opacity .3s;pointer-events:none;
 }
 .hobby-model.is-loaded .hobby-model-hint{opacity:0;}
 .hobby-card .tag-row{margin-bottom:0;}
@@ -346,6 +349,10 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
 .hobby-card .cta{
   font-family:'IBM Plex Mono',monospace;font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;
   color:var(--blue);margin-top:auto;
+}
+@media (max-width:560px){
+  .hobby-card{flex-direction:column;}
+  .hobby-media{width:100%;height:150px;order:-1;}
 }
 
 /* ---------- CONTACT ---------- */
