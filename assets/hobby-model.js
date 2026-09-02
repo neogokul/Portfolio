@@ -42,16 +42,26 @@ function initHobbyModel(container) {
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 0.85;
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(32, 1, 0.1, 1000);
 
-  scene.add(new THREE.HemisphereLight(0xbfd9ff, 0x1a1410, 0.9));
-  const key = new THREE.DirectionalLight(0xffffff, 1.1);
-  key.position.set(0.6, 0.8, 1.2);
+  // The source model ships with no skin texture at all (flat 50% grey PBR
+  // material) — rather than a texture we don't have, a warm key light +
+  // cool fill + soft rim gives the untextured clay a believable skin-like
+  // read, and a subtle subsurface-ish tint is applied to the material itself.
+  scene.add(new THREE.HemisphereLight(0xfff1e0, 0x1c130d, 0.35));
+  const key = new THREE.DirectionalLight(0xfff2d9, 0.95);
+  key.position.set(0.55, 0.85, 1.3);
   scene.add(key);
-  const rim = new THREE.DirectionalLight(0xff6b1a, 0.35);
-  rim.position.set(-1, 0.3, -0.8);
+  const fill = new THREE.DirectionalLight(0xbcd8ff, 0.28);
+  fill.position.set(-1, 0.2, 0.6);
+  scene.add(fill);
+  const rim = new THREE.DirectionalLight(0xff6b1a, 0.5);
+  rim.position.set(-0.8, 0.5, -1);
   scene.add(rim);
 
   const meshes = [];
@@ -91,6 +101,14 @@ function initHobbyModel(container) {
       root.traverse((n) => {
         if (n.isMesh && n.morphTargetInfluences && n.morphTargetDictionary) {
           meshes.push({ mesh: n, dict: n.morphTargetDictionary });
+        }
+        if (n.isMesh && n.material) {
+          const mats = Array.isArray(n.material) ? n.material : [n.material];
+          mats.forEach((mat) => {
+            if (mat.color) mat.color.set(0xd9a892);
+            if ('roughness' in mat) mat.roughness = 0.55;
+            if ('metalness' in mat) mat.metalness = 0;
+          });
         }
       });
       scene.add(root);
