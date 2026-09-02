@@ -329,6 +329,17 @@ nav a:hover{color:var(--orange);border-color:var(--orange);}
   transition:border-color .2s,transform .2s;
 }
 .hobby-card:hover{border-color:var(--blue);transform:translateY(-2px);}
+.hobby-model{
+  margin:-24px -24px 4px -24px;height:150px;border-radius:6px 6px 0 0;
+  overflow:hidden;position:relative;background:radial-gradient(ellipse at 50% 30%,#111a20,#070c0e);
+}
+.hobby-model canvas{display:block;width:100%;height:100%;}
+.hobby-model .hobby-model-hint{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;font-size:0.62rem;letter-spacing:0.06em;text-transform:uppercase;
+  color:var(--muted);transition:opacity .3s;pointer-events:none;
+}
+.hobby-model.is-loaded .hobby-model-hint{opacity:0;}
 .hobby-card .tag-row{margin-bottom:0;}
 .hobby-card h4{font-size:1.05rem;}
 .hobby-card p{color:var(--muted);font-size:0.88rem;}
