@@ -2,6 +2,38 @@
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+// ---- Contact form: submit via fetch so visitors stay on the page ----
+const contactForm = document.querySelector('.contact-form');
+if (contactForm) {
+  const statusEl = contactForm.querySelector('.form-status');
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const submitBtn = contactForm.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    statusEl.textContent = 'Sending…';
+    statusEl.className = 'form-status';
+    try {
+      const res = await fetch(contactForm.action, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: { Accept: 'application/json' },
+      });
+      if (res.ok) {
+        statusEl.textContent = 'Message sent. I will get back to you soon.';
+        statusEl.className = 'form-status success';
+        contactForm.reset();
+      } else {
+        throw new Error('Request failed');
+      }
+    } catch (err) {
+      statusEl.textContent = 'Something went wrong. Please email me directly instead.';
+      statusEl.className = 'form-status error';
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+}
+
 // ---------------------------------------------------------------------
 // Dynamic image loading: the images/ folder listing is read live from
 // GitHub once per page load, and every project's photos are matched out
